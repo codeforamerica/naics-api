@@ -1,9 +1,13 @@
-var express = require('express');
-var app = express();
+var port    = 3000,
+    express = require('express'),
+    app     = express(),
+    api     = require('./routes/api')
 
 app.get('/', function (req, res) {
   res.send('Welcome to the NAICS API.');
 });
 
-app.listen(3000);
-console.log('Listening on port 3000');
+app.get('/q', api.v0.search.get)
+
+app.listen(port);
+console.log('Listening on port ' + port);
