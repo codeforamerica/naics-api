@@ -23,7 +23,7 @@ exports.get = function ( req, res ) {
                 res.send(naics_2012)
             }
         }
-        res.send('Nothing found.')
+        res.send(400, 'Nothing found.')
     }
 }
 
