@@ -1,4 +1,4 @@
-var port    = 3000,
+var PORT    = 3000,
     express = require('express'),
     app     = express(),
     api     = require('./routes/api')
@@ -9,5 +9,11 @@ app.get('/', function (req, res) {
 
 app.get('/q', api.v0.search.get)
 
-app.listen(port);
-console.log('Listening on port ' + port);
+app.configure(function () {
+  app.set( "port", process.env.PORT || PORT )
+//  app.use( express.static( path.join( __dirname, "public") ) )
+})
+
+app.listen( app.get("port"), function () {
+  console.log( "Listening on port " + app.get("port") )
+})
