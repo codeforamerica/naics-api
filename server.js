@@ -8,6 +8,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/q', api.v0.search.get)
+app.get('/v0/q', api.v0.search.get)
 
 app.configure(function () {
   app.set( "port", process.env.PORT || PORT )
