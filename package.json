@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "config": "0.4.24",
-    "express": "3.2.x",
-    "requireindex" : "1.0.x"
+    "requireindex" : "1.0.x",
+    "restify" : "2.5.1"
   },
   "repository" : {
     "type" : "git",
