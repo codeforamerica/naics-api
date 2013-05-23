@@ -8,6 +8,7 @@
     "npm":  "1.2.x"
   },
   "dependencies": {
+    "config": "0.4.24",
     "express": "3.2.x",
     "requireindex" : "1.0.x"
   },
