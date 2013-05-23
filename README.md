@@ -1,6 +1,6 @@
 # naics-api
 
-Basic API to return [NAICS codes](http://www.census.gov/eos/www/naics/) and information
+Basic API to return [NAICS codes](http://www.census.gov/eos/www/naics/) and descriptive information (to-do)
 
 Example request
 
@@ -17,8 +17,14 @@ To get NAICS codes below a given code
     http://naics-api.herokuapp.com/v0/q?year=2012&code=51&below=1
 
 
+To get all NAICS codes for a given years codes (only 2007 and 2012 are available right now)
 
-Note: The URL structure is likely to change in the very near future. Do not use for production (yet).
+    http://naics-api.herokuapp.com/v0/q?year=2012
+
+
+__Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).
+
+
 
 ## Development setup (on Mac OS X 10.8)
 
