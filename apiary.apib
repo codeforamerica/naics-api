@@ -1,0 +1,84 @@
+HOST: http://naics-api.herokuapp.com/v0/
+
+--- NAICS API ---
+
+---
+The [North American Industry Classification System](http://www.census.gov/eos/www/naics/) (NAICS) is used by the U.S. Federal Government to organize 
+different types of businesses economic analysis purposes, and while there are different types of numbering systems out there that do this, a lot of 
+local municipalities have also started adopting it for their own business classification purposes. The NAICS codes and descriptions are revised every
+five years (latest: 2012; next: 2017), and while information is freely provided as PDFs or Excel spreadsheets and hosted by the U.S. Census Bureau, 
+no machine-readable API exists for retrieving this data that can be easily used in applications. Until now.
+---
+
+--
+Retrieving NAICS codes
+How to get codes, and information related to that code
+--
+
+Get all NAICS codes for a given year (only 2007 and 2012 are available right now.)
+GET /q{?year}
+< 200
+< Content-Type: application/json
+{
+  "name": "2012 NAICS Codes",
+  "year": 2012,
+  "items": [
+    {
+      "seq_no": 1,
+      "code": 11,
+      "title": "Agriculture, Forestry, Fishing and Hunting",
+      "change_indicator": 0,
+      "trilateral": 1
+    },
+    {
+      ...
+    }
+  ]
+}
+
+Get a single NAICS code.
+GET /q?{?year,code}
+< 200
+< Content-Type: application/json
+{
+  "seq_no": 1475,
+  "code": 519120,
+  "title": "Libraries and Archives",
+  "change_indicator": 0,
+  "trilateral": 0
+}
+
+Get all NAICS codes above in the hierarchy of the requested code.
+GET /q?{?year,code,above}
+< 200
+< Content-Type: application/json
+{
+  "seq_no": 1475,
+  "code": 519120,
+  "title": "Libraries and Archives",
+  "change_indicator": 0,
+  "trilateral": 0
+}
+
+Get all NAICS codes below in the hierarchy of the requested code.
+GET /q?{?year,code}
+< 200
+< Content-Type: application/json
+{
+  "seq_no": 1475,
+  "code": 519120,
+  "title": "Libraries and Archives",
+  "change_indicator": 0,
+  "trilateral": 0
+}
+
+
+--
+Searching for a NAICS code
+(this is a future feature.)
+--
+
+Returns all the NAICS codes that contain search terms in the title, description, illustrative example, or index listing.
+GET /search{?terms}
+< 200
+{ "receipt": "/payment/receipt/1" }
