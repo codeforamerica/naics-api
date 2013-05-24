@@ -20,20 +20,20 @@ GET /q{?year}
 < 200
 < Content-Type: application/json
 {
-  "name": "2012 NAICS Codes",
-  "year": 2012,
-  "items": [
-    {
-      "seq_no": 1,
-      "code": 11,
-      "title": "Agriculture, Forestry, Fishing and Hunting",
-      "change_indicator": 0,
-      "trilateral": 1
-    },
-    {
-      ...
-    }
-  ]
+    "name": "2012 NAICS Codes",
+    "year": 2012,
+    "items": [
+        {
+            "seq_no": 1,
+            "code": 11,
+            "title": "Agriculture, Forestry, Fishing and Hunting",
+            "change_indicator": 0,
+            "trilateral": 1
+        },
+        {
+            ...
+        }
+    ]
 }
 
 Get a single NAICS code.
@@ -41,27 +41,50 @@ GET /q?{?year,code}
 < 200
 < Content-Type: application/json
 {
-  "seq_no": 1475,
-  "code": 519120,
-  "title": "Libraries and Archives",
-  "change_indicator": 0,
-  "trilateral": 0
+    "seq_no": 1475,
+    "code": 519120,
+    "title": "Libraries and Archives",
+    "change_indicator": 0,
+    "trilateral": 0
 }
 
 Get all NAICS codes above in the hierarchy of the requested code.
 GET /q?{?year,code,above}
 < 200
 < Content-Type: application/json
-{
-  "seq_no": 1475,
-  "code": 519120,
-  "title": "Libraries and Archives",
-  "change_indicator": 0,
-  "trilateral": 0
-}
+[
+    {
+        "seq_no": 1402,
+        "code": 51,
+        "title": "Information",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1470,
+        "code": 519,
+        "title": "Other Information Services",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1471,
+        "code": 5191,
+        "title": "Other Information Services",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1474,
+        "code": 51912,
+        "title": "Libraries and Archives",
+        "change_indicator": 0,
+        "trilateral": 1
+    }
+]
 
 Get all NAICS codes below in the hierarchy of the requested code.
-GET /q?{?year,code}
+GET /q?{?year,code,below}
 < 200
 < Content-Type: application/json
 {
@@ -78,7 +101,36 @@ Searching for a NAICS code
 (this is a future feature.)
 --
 
-Returns all the NAICS codes that contain search terms in the title, description, illustrative example, or index listing.
+Returns all the NAICS codes that contain search terms in the title, description, illustrative example, or index listing. NOT IMPLEMENTED
 GET /search{?terms}
 < 200
-{ "receipt": "/payment/receipt/1" }
+[
+    {
+        "seq_no": 1402,
+        "code": 51,
+        "title": "Information",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1470,
+        "code": 519,
+        "title": "Other Information Services",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1471,
+        "code": 5191,
+        "title": "Other Information Services",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1474,
+        "code": 51912,
+        "title": "Libraries and Archives",
+        "change_indicator": 0,
+        "trilateral": 1
+    }
+]
