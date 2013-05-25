@@ -30,9 +30,7 @@ GET /q{?year}
             "change_indicator": 0,
             "trilateral": 1
         },
-        {
-            ...
-        }
+        {  ...  }
     ]
 }
 
@@ -87,13 +85,51 @@ Get all NAICS codes below in the hierarchy of the requested code.
 GET /q?{?year,code,below}
 < 200
 < Content-Type: application/json
-{
-  "seq_no": 1475,
-  "code": 519120,
-  "title": "Libraries and Archives",
-  "change_indicator": 0,
-  "trilateral": 0
-}
+[
+    {
+        "seq_no": 1403,
+        "code": 511,
+        "title": "Publishing Industries (except Internet)",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1404,
+        "code": 5111,
+        "title": "Newspaper, Periodical, Book, and Directory Publishers",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1405,
+        "code": 51111,
+        "title": "Newspaper Publishers",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1406,
+        "code": 511110,
+        "title": "Newspaper Publishers",
+        "change_indicator": 0,
+        "trilateral": 0
+    },
+    {
+        "seq_no": 1407,
+        "code": 51112,
+        "title": "Periodical Publishers",
+        "change_indicator": 0,
+        "trilateral": 1
+    },
+    {
+        "seq_no": 1408,
+        "code": 511120,
+        "title": "Periodical Publishers",
+        "change_indicator": 0,
+        "trilateral": 0
+    },
+    {  ...  }
+]
 
 
 --
