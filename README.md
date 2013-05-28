@@ -1,6 +1,8 @@
 # naics-api
 
-Basic API to return [NAICS codes](http://www.census.gov/eos/www/naics/) and descriptive information (in progress at [naics-scraper](https://github.com/daguar/naics-scraper/))
+Basic API to return [NAICS codes](http://www.census.gov/eos/www/naics/) and descriptive information (in progress at [daguar/naics-scraper](https://github.com/daguar/naics-scraper/)).
+
+Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1).
 
 #### API documentation
 
