@@ -17,6 +17,7 @@ How to get codes, and information related to that code
 
 Get all NAICS codes for a given year (only 2007 and 2012 are available right now.)
 GET /q{?year}
+> Accept: application/json
 < 200
 < Content-Type: application/json
 {
@@ -35,7 +36,8 @@ GET /q{?year}
 }
 
 Get a single NAICS code.
-GET /q?{?year,code}
+GET /q{?year,code}
+> Accept: application/json
 < 200
 < Content-Type: application/json
 {
@@ -47,7 +49,8 @@ GET /q?{?year,code}
 }
 
 Get all NAICS codes above in the hierarchy of the requested code.
-GET /q?{?year,code,above}
+GET /q{?year,code,above}
+> Accept: application/json
 < 200
 < Content-Type: application/json
 [
@@ -82,7 +85,8 @@ GET /q?{?year,code,above}
 ]
 
 Get all NAICS codes below in the hierarchy of the requested code.
-GET /q?{?year,code,below}
+GET /q{?year,code,below}
+> Accept: application/json
 < 200
 < Content-Type: application/json
 [
@@ -139,7 +143,9 @@ Searching for a NAICS code
 
 Returns all the NAICS codes that contain search terms in the title, description, illustrative example, or index listing. NOT IMPLEMENTED
 GET /search{?terms}
+> Accept: application/json
 < 200
+< Content-Type: application/json
 [
     {
         "seq_no": 1402,
