@@ -13,6 +13,20 @@ no machine-readable API exists for retrieving this data that can be easily used 
 --
 Retrieving NAICS codes
 How to get codes, and information related to that code
+
+#### Fields
+* __seq_no__ This is a sequence number provided by NAICS and appears to be used as primary key by some agencies. Do not use this except for backwards-compatibility with other databases or software.
+* __code__ This is the 2-6 digit NAICS code.  Always use this when referring to NAICS by code.
+* __title__ This is the name of the NAICS code.
+* __change_indicator (2012 NAICS only)__ If present, indicates whether this code changed from the previous (2007) NAICS.
+    * __1 = title changed__ from 2007 NAICS, but no content has changed.
+    * __2 = new code__ in 2012 NAICS.
+    * __3 = content changed__ from 2007 NAICS, and title may or may not have changed.
+* __trilateral (2012 NAICS only)__ If present, indicates that there is a trilateral agreement between Canada, Mexico, and the United States to use a comparable definition of this industry for this code.
+* __description (to-do)__ If present, this is the text description of this NAICS Code provided by the NAICS Definition File.
+* __crossrefs (to-do)__ If present, this is an array of cross-references to other NAICS codes that should be used to fine-tune a business classification, provided by the NAICS Definition File.
+* __keywords (to-do)__ (6-digit codes only) If present, this is an array of other titles that belong under this NAICS code, provided by the NAICS Index File. Very useful as a keyword search to determine where specific businesses should be classified. 
+
 --
 
 Get all NAICS codes for a given year (only 2007 and 2012 are available right now.)
@@ -28,7 +42,6 @@ GET /q{?year}
             "seq_no": 1,
             "code": 11,
             "title": "Agriculture, Forestry, Fishing and Hunting",
-            "change_indicator": 0,
             "trilateral": 1
         },
         {  ...  }
@@ -41,11 +54,11 @@ GET /q{?year,code}
 < 200
 < Content-Type: application/json
 {
-    "seq_no": 1475,
-    "code": 519120,
-    "title": "Libraries and Archives",
-    "change_indicator": 0,
-    "trilateral": 0
+    "seq_no": 1909,
+    "code": 62321,
+    "title": "Residential Intellectual and Developmental Disability Facilities",
+    "change_indicator": 1,
+    "trilateral": 1
 }
 
 Get all NAICS codes above in the hierarchy of the requested code.
