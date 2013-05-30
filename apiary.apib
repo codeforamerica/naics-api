@@ -14,10 +14,10 @@ no machine-readable API exists for retrieving this data that can be easily used 
 Retrieving NAICS codes
 How to get codes, and information related to that code
 
-#### Fields
-* __seq_no__ This is a sequence number provided by NAICS and appears to be used as primary key by some agencies. Do not use this except for backwards-compatibility with other databases or software.
-* __code__ This is the 2-6 digit NAICS code.  Always use this when referring to NAICS by code.
+#### Data Schema
+* __code__ This is the 2-6 digit NAICS code.
 * __title__ This is the name of the NAICS code.
+* __seq_no__ This is a sequence number provided by NAICS and appears to be used as a primary key in databases by some agencies. Do not use this except for backwards-compatibility with other software.
 * __change_indicator (2012 NAICS only)__ If present, indicates whether this code changed from the previous (2007) NAICS.
     * __1 = title changed__ from 2007 NAICS, but no content has changed.
     * __2 = new code__ in 2012 NAICS.
