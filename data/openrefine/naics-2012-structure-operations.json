@@ -1,0 +1,198 @@
+[
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Column 4",
+    "columnName": "Column 4"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Column 5",
+    "columnName": "Column 5"
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Column 6",
+    "columnName": "Column 6"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column 2012 NAICS Title to title",
+    "oldColumnName": "2012 NAICS Title",
+    "newColumnName": "title"
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column 2012 NAICS Code to code",
+    "oldColumnName": "2012 NAICS Code",
+    "newColumnName": "code"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column Change Indicator to position 2",
+    "columnName": "Change Indicator",
+    "index": 2
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column seq_no at index 1 based on column code using expression grel:rowIndex+1",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "seq_no",
+    "columnInsertIndex": 1,
+    "baseColumnName": "code",
+    "expression": "grel:rowIndex+1",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column seq_no to position 0",
+    "columnName": "seq_no",
+    "index": 0
+  },
+  {
+    "op": "core/column-rename",
+    "description": "Rename column Change Indicator to change_indicator",
+    "oldColumnName": "Change Indicator",
+    "newColumnName": "change_indicator"
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column change_indicator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "change_indicator",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "***"
+        ],
+        "to": "3"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column change_indicator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "change_indicator",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "**"
+        ],
+        "to": "2"
+      }
+    ]
+  },
+  {
+    "op": "core/mass-edit",
+    "description": "Mass edit cells in column change_indicator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "change_indicator",
+    "expression": "value",
+    "edits": [
+      {
+        "fromBlank": false,
+        "fromError": false,
+        "from": [
+          "*"
+        ],
+        "to": "1"
+      }
+    ]
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column title using expression value.trim()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "title",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column trilateral at index 3 based on column title using expression grel:if(endsWith(value,'T'),1,null)",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "trilateral",
+    "columnInsertIndex": 3,
+    "baseColumnName": "title",
+    "expression": "grel:if(endsWith(value,'T'),1,null)",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column title using expression grel:chomp(value,'T')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "title",
+    "expression": "grel:chomp(value,'T')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column change_indicator using expression value.toNumber()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "change_indicator",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column code using expression value.toString()",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "code",
+    "expression": "value.toString()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column code using expression grel:chomp(value,'.0')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "code",
+    "expression": "grel:chomp(value,'.0')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  }
+]
