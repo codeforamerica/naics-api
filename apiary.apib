@@ -25,7 +25,7 @@ How to get codes, and information related to that code
 * __trilateral (2012 NAICS only)__ If present, indicates that there is a trilateral agreement between Canada, Mexico, and the United States to use a comparable definition of this industry for this code.
 * __description (to-do)__ If present, this is the text description of this NAICS Code provided by the NAICS Definition File.
 * __crossrefs (to-do)__ If present, this is an array of cross-references to other NAICS codes that should be used to fine-tune a business classification, provided by the NAICS Definition File.
-* __keywords (to-do)__ (6-digit codes only) If present, this is an array of other titles that belong under this NAICS code, provided by the NAICS Index File. Very useful as a keyword search to determine where specific businesses should be classified. 
+* __index__ (6-digit codes only) If present, this is an array of other titles that belong under this NAICS code, provided by the NAICS Index File. Very useful as a keyword search to determine where specific businesses should be classified. 
 
 --
 
@@ -54,11 +54,33 @@ GET /q{?year,code}
 < 200
 < Content-Type: application/json
 {
-    "seq_no": 1909,
-    "code": 62321,
-    "title": "Residential Intellectual and Developmental Disability Facilities",
-    "change_indicator": 1,
-    "trilateral": 1
+    "seq_no": 1663,
+    "code": 541430,
+    "title": "Graphic Design Services",
+    "index": [
+        "Art services, commercial",
+        "Art services, graphic",
+        "Art studios, commercial",
+        "Artists, independent commercial",
+        "Artists, independent graphic",
+        "Artists, independent medical",
+        "Commercial art services",
+        "Commercial artists, independent",
+        "Commercial illustration services",
+        "Commercial illustrators, independent",
+        "Communication design services, visual",
+        "Corporate identification (i.e., logo) design services",
+        "Graphic art and related design services",
+        "Graphic artists, independent",
+        "Graphic design services",
+        "Illustrators, independent commercial",
+        "Medical art services",
+        "Medical artists, independent",
+        "Medical illustration services",
+        "Medical illustrators, independent",
+        "Silk screen design services",
+        "Studios, commercial art"
+    ]
 }
 
 Get all NAICS codes above in the hierarchy of the requested code.
@@ -71,28 +93,24 @@ GET /q{?year,code,above}
         "seq_no": 1402,
         "code": 51,
         "title": "Information",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1470,
         "code": 519,
         "title": "Other Information Services",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1471,
         "code": 5191,
         "title": "Other Information Services",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1474,
         "code": 51912,
         "title": "Libraries and Archives",
-        "change_indicator": 0,
         "trilateral": 1
     }
 ]
@@ -107,43 +125,35 @@ GET /q{?year,code,below}
         "seq_no": 1403,
         "code": 511,
         "title": "Publishing Industries (except Internet)",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1404,
         "code": 5111,
         "title": "Newspaper, Periodical, Book, and Directory Publishers",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1405,
         "code": 51111,
         "title": "Newspaper Publishers",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1406,
         "code": 511110,
         "title": "Newspaper Publishers",
-        "change_indicator": 0,
-        "trilateral": 0
     },
     {
         "seq_no": 1407,
         "code": 51112,
         "title": "Periodical Publishers",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1408,
         "code": 511120,
         "title": "Periodical Publishers",
-        "change_indicator": 0,
-        "trilateral": 0
     },
     {  ...  }
 ]
@@ -164,28 +174,24 @@ GET /search{?terms}
         "seq_no": 1402,
         "code": 51,
         "title": "Information",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1470,
         "code": 519,
         "title": "Other Information Services",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1471,
         "code": 5191,
         "title": "Other Information Services",
-        "change_indicator": 0,
         "trilateral": 1
     },
     {
         "seq_no": 1474,
         "code": 51912,
         "title": "Libraries and Archives",
-        "change_indicator": 0,
         "trilateral": 1
     }
 ]
