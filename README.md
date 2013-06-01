@@ -30,6 +30,11 @@ To get all NAICS codes for a given years codes (only 2007 and 2012 are available
     http://naics-api.herokuapp.com/v0/q?year=2012
 
 
+To get all NAICS codes for given search terms (searches only title and index right now)
+
+    http://naics-api.herokuapp.com/v0/s?year=2012&terms=libraries
+
+
 __Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).
 
 
