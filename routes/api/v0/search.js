@@ -9,14 +9,7 @@ var searchjs            = require('searchjs')
 exports.get = function ( req, res ) {
     var query = req.query
     var naics_year,
-        naics_index,
-        collection,
-        termsTitle = {},
-        termsIndex = {},
-        matchTitle,
-        matchIndex,
-        matches,
-        result
+        naics_index
 
     if (query.year) {
         if (query.year == '2007' || query.year == '2012') {
@@ -25,10 +18,6 @@ exports.get = function ( req, res ) {
             if (query.year == '2012') { naics_year = naics_2012; naics_index = naics_2012_index }
 
             if (query.terms) {
-                
-                // create search objects from query
-                termsTitle = {title: query.terms, _text: true}
-                termsIndex = {index: query.terms, _text: true}
 
                 // add index info to NAICS codes
                 for (var i = 0; i < naics_year.items.length; i++) {
@@ -36,22 +25,18 @@ exports.get = function ( req, res ) {
                 }
 
                 // have a complete array ready for search
-                collection = naics_year.items
+                var collection = naics_year.items
 
-                // search
-                matchTitle = searchjs.matchArray(collection, termsTitle)
-                matchIndex = searchjs.matchArray(collection, termsIndex)
+                // create search objects from query
+                var terms = query.terms
 
-                // combine search results into one array
-                matches = matchTitle.concat(matchIndex)
+                var jsql = {_join: 'OR', title: terms, index: terms, _text: true}
 
-                // remove dupes
-                result = matches.filter(function(elem, pos) {
-                    return matches.indexOf(elem) == pos;
-                })
+                // search using searchjs
+                var matches = searchjs.matchArray(collection, jsql)
 
                 // Send to user
-                res.send(result)
+                res.send(matches)
 
             }
             else {
