@@ -162,38 +162,80 @@ GET /q{?year,code,below}
 
 --
 Searching for a NAICS code
-(this is a future feature.)
+Find the NAICS code for the business type
 --
 
-Returns all the NAICS codes that contain search terms in the title, description, illustrative example, or index listing. NOT IMPLEMENTED
-GET /search{?terms}
+Returns an array of all the NAICS codes that contain search terms in the title or index listing. 
+
+Currently, this does not search description, illustrative examples, or cross references because we don't have this information yet.
+
+Example shows search term for "libraries"
+GET /s{?year,terms}
 > Accept: application/json
 < 200
 < Content-Type: application/json
 [
     {
-        "seq_no": 1402,
-        "code": 51,
-        "title": "Information",
-        "trilateral": 1
-    },
-    {
-        "seq_no": 1470,
-        "code": 519,
-        "title": "Other Information Services",
-        "trilateral": 1
-    },
-    {
-        "seq_no": 1471,
-        "code": 5191,
-        "title": "Other Information Services",
-        "trilateral": 1
-    },
-    {
         "seq_no": 1474,
         "code": 51912,
         "title": "Libraries and Archives",
         "trilateral": 1
+    },
+    {
+        "seq_no": 1475,
+        "code": 519120,
+        "title": "Libraries and Archives",
+        "index": [
+            "Archives",
+            "Bookmobiles",
+            "Centers for documentation (i.e., archives)",
+            "Circulating libraries",
+            "Film archives",
+            "Lending libraries",
+            "Libraries (except motion picture stock footage, motion picture commercial distribution)",
+            "Motion picture film libraries, archives",
+            "Music archives",
+            "Reference libraries"
+        ]
+    },
+    {
+        "seq_no": 1424,
+        "code": 512120,
+        "title": "Motion Picture and Video Distribution",
+        "index": [
+            "Animated cartoon distribution",
+            "Film distribution agencies",
+            "Film distribution, motion picture and video",
+            "Film libraries, commercial distribution",
+            "Motion picture distribution exclusive of production",
+            "Motion picture film distributors",
+            "Motion picture film libraries",
+            "Tape distribution for television",
+            "Television show syndicators"
+        ]
+    },
+    {
+        "seq_no": 1430,
+        "code": 512199,
+        "title": "Other Motion Picture and Video Industries",
+        "index": [
+            "Booking agencies, motion picture",
+            "Booking agencies, motion picture or video productions",
+            "Film libraries, motion picture or video, stock footage",
+            "Film processing laboratories, motion picture",
+            "Film restoration services",
+            "Laboratory services, motion picture",
+            "Libraries, motion picture stock footage film",
+            "Libraries, videotape, stock footage",
+            "Motion picture booking agencies",
+            "Motion picture film laboratories",
+            "Motion picture film libraries, stock footage",
+            "Motion picture film reproduction for theatrical distribution",
+            "Motion picture laboratories",
+            "Reproduction of motion picture films for theatrical distribution",
+            "Stock footage film libraries",
+            "Videotape libraries, stock footage"
+        ]
     }
 ]
 
