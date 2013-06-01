@@ -194,5 +194,36 @@
     "onError": "keep-original",
     "repeat": false,
     "repeatCount": 10
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column change_indicator to position 3",
+    "columnName": "change_indicator",
+    "index": 3
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column seq_no to position 1",
+    "columnName": "seq_no",
+    "index": 1
+  },
+  {
+    "op": "core/column-move",
+    "description": "Move column seq_no to position 2",
+    "columnName": "seq_no",
+    "index": 2
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column title using expression grel:replace(value,\"’\",\"'\")",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "title",
+    "expression": "grel:replace(value,\"’\",\"'\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
   }
 ]
