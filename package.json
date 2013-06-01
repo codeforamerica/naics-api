@@ -10,7 +10,8 @@
   "dependencies": {
     "config": "0.4.24",
     "requireindex" : "1.0.x",
-    "restify" : "2.5.1"
+    "restify" : "2.5.1",
+    "searchjs" : "0.2.x"
   },
   "repository" : {
     "type" : "git",
