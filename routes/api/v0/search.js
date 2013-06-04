@@ -2,25 +2,30 @@
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
     naics_2012          = require(process.cwd() + '/data/naics-2012'),
     naics_2007_index    = require(process.cwd() + '/data/naics-2007-index'),
-    naics_2012_index    = require(process.cwd() + '/data/naics-2012-index')
+    naics_2012_index    = require(process.cwd() + '/data/naics-2012-index'),
+    naics_2012_desc     = require(process.cwd() + '/data/naics-2012-desc')
 var searchjs            = require('searchjs')
 
 
 exports.get = function ( req, res ) {
     var query = req.query
     var naics_year,
-        naics_index
+        naics_index,
+        naics_desc
 
     if (query.year) {
         if (query.year == '2007' || query.year == '2012') {
 
             if (query.year == '2007') { naics_year = naics_2007; naics_index = naics_2007_index }
-            if (query.year == '2012') { naics_year = naics_2012; naics_index = naics_2012_index }
+            if (query.year == '2012') { naics_year = naics_2012; naics_index = naics_2012_index; naics_desc = naics_2012_desc }
 
             if (query.terms) {
 
                 // add index info to NAICS codes
                 for (var i = 0; i < naics_year.items.length; i++) {
+                    if (naics_desc) {
+                        naics_year.items[i]['description'] = naics_desc[naics_year.items[i].code]
+                    }
                     naics_year.items[i]['index'] = naics_index[naics_year.items[i].code]
                 }
 
@@ -30,7 +35,7 @@ exports.get = function ( req, res ) {
                 // create search objects from query
                 var terms = query.terms
 
-                var jsql = {_join: 'OR', title: terms, index: terms, _text: true}
+                var jsql = {_join: 'OR', title: terms, index: terms, description: terms, _text: true}
 
                 // search using searchjs
                 var matches = searchjs.matchArray(collection, jsql)
