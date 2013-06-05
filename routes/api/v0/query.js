@@ -49,16 +49,14 @@ exports.get = function ( req, res ) {
             }
             else {
                 // return full year
+                var naics_full = []
 
-                // add index
+                // add other information
                 for (var i = 0; i < naics_year.items.length; i++) {
-                    if (naics_desc) {
-                        naics_year.items[i]['description'] = naics_desc[naics_year.items[i].code]
-                    }
-                    naics_year.items[i]['index'] = naics_index[naics_year.items[i].code]
+                    naics_full[i] = getCode(naics_year, naics_year.items[i].code)
                 }
 
-                res.send(naics_year);
+                res.send(naics_full);
             }
         }
         if (query.year == '2002' || query.year == '1997') {
@@ -76,13 +74,25 @@ exports.get = function ( req, res ) {
         // Returns information for a given NAICS code
         for (var i = 0; i < year.items.length; i++) {
             if (year.items[i].code == code) {
-                if (naics_desc) {
-                    year.items[i]['description'] = naics_desc[code]
-                }
-                year.items[i]['index'] = naics_index[code]
+
+                assembleCode(year.items[i], code)
+
                 return year.items[i]
             }
         }
+    }
+
+    function assembleCode (item, code) {
+        // Add index and description to given code
+
+        if (naics_desc) {
+            item.description = naics_desc[code]
+        }
+        if (naics_index) {
+            item.index = naics_index[code]
+        }
+
+        return item
     }
 
     function getAboveCode (year, code) {
@@ -105,14 +115,10 @@ exports.get = function ( req, res ) {
         // However if you try to get codes using just the two-digit range (e.g. '31' instead, or '32' it will sort of work.)
 
         var collection = []
-
+ 
         for (var i = 0; i < year.items.length; i++) {
             if (year.items[i].code.toString().substr(0, code.length) == code && year.items[i].code != code) {
-                if (naics_desc) {
-                    naics_year.items[i]['description'] = naics_desc[naics_year.items[i].code]
-                }
-                year.items[i]['index'] = naics_index[year.items[i].code]
-                collection[collection.length] = year.items[i]
+                collection[collection.length] = assembleCode(year.items[i], year.items[i].code)
             }
         }
         return collection;
