@@ -5,6 +5,8 @@ var config      = require('config'),
 var app = restify.createServer()
 
 app.use(restify.queryParser())
+app.use(restify.CORS())
+app.use(restify.fullResponse())
 
 // Routes
 app.get('/', function (req, res) {

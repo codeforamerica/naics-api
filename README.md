@@ -8,7 +8,9 @@ Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1).
 
 [Latest API documentation is hosted at Apiary.io.](http://docs.naicsapi.apiary.io/)
 
-#### Quick-n-dirty API documentation
+## Examples
+
+#### API requests
 
 Example request
 
@@ -37,7 +39,9 @@ To get all NAICS codes for given search terms (searches only title and index rig
 
 __Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).
 
+#### Usage
 
+See an [example demo of the API used in a search form.](http://louh.github.io/naics-search)
 
 ## Development setup (on Mac OS X 10.8)
 
