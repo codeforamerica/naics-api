@@ -13,6 +13,7 @@ exports.get = function ( req, res ) {
         naics_desc,
         above,
         below,
+        collapse,
         item
 
     if (query.year) {
@@ -50,10 +51,20 @@ exports.get = function ( req, res ) {
             else {
                 // return full year
                 var naics_full = []
+                var the_item
 
                 // add other information
                 for (var i = 0; i < naics_year.items.length; i++) {
-                    naics_full[i] = getCode(naics_year, naics_year.items[i].code)
+                    the_item = getCode(naics_year, naics_year.items[i].code)
+
+                    if (query.collapse == '1') {
+                        if (the_item.description) {
+                            if (the_item.description.substring(0, 28) == 'See industry description for') continue;                            
+                        }
+                        if (the_item.description == null) continue;
+                    }
+
+                    naics_full[naics_full.length] = getCode(naics_year, naics_year.items[i].code)
                 }
 
                 res.send(naics_full);
