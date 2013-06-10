@@ -13,7 +13,6 @@ exports.get = function ( req, res ) {
         naics_desc,
         above,
         below,
-        collapse,
         item
 
     if (query.year) {
@@ -32,12 +31,12 @@ exports.get = function ( req, res ) {
                 // If user wants NAICS codes above or below it on the hierarchy.
                 if (query.above == 1) {
                     above = getAboveCode(naics_year, naics_code)
-                    res.send(above)
+                    sendResults(above)
                 }
 
                 if (query.below == 1) {
                     below = getBelowCode(naics_year, naics_code)
-                    res.send(below)
+                    sendResults(below)
                 }
 
                 // Send to user
@@ -67,7 +66,7 @@ exports.get = function ( req, res ) {
                     naics_full[naics_full.length] = getCode(naics_year, naics_year.items[i].code)
                 }
 
-                res.send(naics_full);
+                sendResults(naics_full);
             }
         }
         if (query.year == '2002' || query.year == '1997') {
@@ -141,6 +140,41 @@ exports.get = function ( req, res ) {
             'http_status': http_status,
             'error_msg': error_msg
         })
+    }
+
+    function sendResults (results) {
+        // paginate and send results
+
+        if (query.limit || query.page) {
+            results = paginate(results)
+        }
+
+        res.send(results)
+    }
+
+    function paginate (input) {
+        // use &limit and &page to determine paged results
+        // if &limit < 1 or null, assume no limit.
+        // if &page=0 or null, assume page 1. this function should also add a page number to the result json
+        // would it be possible / necessary to use negative page numbers to indicate counting from the back of the results?
+        // note: specifying a page number is useless unless limit is also specified.
+
+        var isInt = /^\d+$/
+        var limit = query.limit
+        var page = query.page
+
+        if (limit > 0 && isInt.test(limit)) {
+            if (page < 1 || isInt.test(page) == false) {
+                page = 1
+            }
+
+            var lower = limit * (page - 1)
+            var upper = limit * page
+
+            input = input.slice(lower, upper)
+        }
+
+        return input
     }
 
 }
