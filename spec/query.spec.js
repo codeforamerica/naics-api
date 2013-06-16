@@ -129,12 +129,37 @@ describe('Querying for a single NAICS code', function () {
 
 describe('Querying for all codes above in the hierarchy for a given NAICS code', function () {
   
-  it('should return an array of 4 results for code 541430 in year 2012', function (done) {
+  it('should return an array of 4 results for code 541430 in year 2012, while excluding 541430', function (done) {
     request('http://localhost:3000/q?year=2012&code=541430&above=1', function (error, response, body) {
       var jbody = JSON.parse(body)
       expect(jbody.length).toEqual(4)
       expect(jbody[0].code).toEqual(54)
       expect(jbody[3].code).toEqual(54143)
+      done()
+    })
+  })
+
+})
+
+describe('Querying for all codes below in the hierarchy for a given NAICS code', function () {
+  
+  it('should return an array of 93 results for code 54 in year 2012, while excluding 54', function (done) {
+    request('http://localhost:3000/q?year=2012&code=54&below=1', function (error, response, body) {
+      var jbody = JSON.parse(body)
+      expect(jbody.length).toEqual(93)
+      expect(jbody[0].code).toEqual(541)
+      expect(jbody[38].code).toEqual(541430)
+      expect(jbody[92].code).toEqual(541990)
+      done()
+    })
+  })
+
+  it('should return an array of 8 results for the above test when page is 3 and limit is 8', function (done) {
+    request('http://localhost:3000/q?year=2012&code=54&below=1&page=3&limit=8', function (error, response, body) {
+      var jbody = JSON.parse(body)
+      expect(jbody.length).toEqual(8)
+      expect(jbody[0].code).toEqual(54131)
+      expect(jbody[7].code).toEqual(541340)
       done()
     })
   })
