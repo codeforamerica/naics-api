@@ -154,19 +154,12 @@ exports.get = function ( req, res ) {
 
     function paginate (input) {
         // use &limit and &page to determine paged results
-        // if &limit < 1 or null, assume no limit.
-        // if &page=0 or null, assume page 1. this function should also add a page number to the result json
-        // would it be possible / necessary to use negative page numbers to indicate counting from the back of the results?
-        // note: specifying a page number is useless unless limit is also specified.
 
         var isInt = /^\d+$/
         var limit = query.limit
         var page = query.page
 
-        if (limit > 0 && isInt.test(limit)) {
-            if (page < 1 || isInt.test(page) == false) {
-                page = 1
-            }
+        if (isInt.test(limit)) {
 
             var lower = limit * (page - 1)
             var upper = limit * page
