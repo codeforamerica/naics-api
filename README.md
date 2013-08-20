@@ -68,5 +68,5 @@ See an [example demo of the API used in a search form.](http://louh.github.io/na
 1) Start the REST API server.
 
     cd $PROJECT_ROOT
-    node server.js
+    npm start
 
