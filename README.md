@@ -14,27 +14,27 @@ Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1).
 
 Example request
 
-    http://naics-api.herokuapp.com/v0/q?year=2012&code=519120
+    http://api.naics.us/v0/q?year=2012&code=519120
 
 
 To get NAICS codes above a given code
 
-    http://naics-api.herokuapp.com/v0/q?year=2012&code=519120&above=1
+    http://api.naics.us/v0/q?year=2012&code=519120&above=1
 
 
 To get NAICS codes below a given code
 
-    http://naics-api.herokuapp.com/v0/q?year=2012&code=51&below=1
+    http://api.naics.us/v0/q?year=2012&code=51&below=1
 
 
 To get all NAICS codes for a given years codes (only 2007 and 2012 are available right now)
 
-    http://naics-api.herokuapp.com/v0/q?year=2012
+    http://api.naics.us/v0/q?year=2012
 
 
 To get all NAICS codes for given search terms (searches only title and index right now)
 
-    http://naics-api.herokuapp.com/v0/s?year=2012&terms=libraries
+    http://api.naics.us/v0/s?year=2012&terms=libraries
 
 
 __Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).

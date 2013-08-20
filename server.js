@@ -15,6 +15,8 @@ app.get('/', function (req, res) {
   res.write('Welcome to the NAICS API. For more information, go to <a href="https://github.com/louh/naics-api">GitHub</a>.')
   res.end()
 });
+app.get('/v0/q', api.v0.query.get)
+app.get('/v0/s', api.v0.search.get)
 app.get('api/v0/q', api.v0.query.get)
 app.get('api/v0/s', api.v0.search.get)
 
