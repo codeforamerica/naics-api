@@ -65,14 +65,6 @@ def find_crossreferences(soup):
         
         yield dict(code=code, text=text)
 
-rows = DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/6-digit_2012_Codes.csv'))
-
-rows = [
-    {'2012 NAICS Code': 423390, '2012 NAICS Title': 'Other Construction Material Merchant Wholesalers'},
-    {'2012 NAICS Code': 111110, '2012 NAICS Title': 'Soybean Farming'},
-    {'2012 NAICS Code': 111310, '2012 NAICS Title': 'Orange Groves'},
-    ]
-
 try:
     outfile = argv[1]
     results = {}
@@ -80,11 +72,13 @@ except IndexError:
     print >> stderr, 'Usage: %s <output file name>' % argv[0]
     exit(1)
 
-for row in rows:
+rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/6-digit_2012_Codes.csv')))
+
+for (index, row) in enumerate(rows):
 
     code = row['2012 NAICS Code']
     
-    print >> stderr, code, '-', row['2012 NAICS Title']
+    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS Title']
 
     q = dict(code=code, search='2012 NAICS Search')
     url = 'http://www.census.gov/cgi-bin/sssd/naics/naicsrch?' + urlencode(q)
