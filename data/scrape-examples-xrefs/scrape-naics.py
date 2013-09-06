@@ -72,13 +72,16 @@ except IndexError:
     print >> stderr, 'Usage: %s <output file name>' % argv[0]
     exit(1)
 
-rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/6-digit_2012_Codes.csv')))
+# rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/6-digit_2012_Codes.csv')))
+rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/2-digit_2012_Codes.csv')))
 
 for (index, row) in enumerate(rows):
 
-    code = row['2012 NAICS Code']
+#    code = row['2012 NAICS Code']
+    code = row['2012 NAICS US   Code']
     
-    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS Title']
+#    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS Title']
+    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS US Title']
 
     q = dict(code=code, search='2012 NAICS Search')
     url = 'http://www.census.gov/cgi-bin/sssd/naics/naicsrch?' + urlencode(q)
@@ -86,13 +89,13 @@ for (index, row) in enumerate(rows):
     soup = BeautifulSoup(html)
     soup = soup.find(id='middle-column').find(class_='inside')
     
-    results[code] = dict(examples=[], xrefs=[])
+    results[code] = dict(examples=[], crossrefs=[])
     
     for example in find_examples(soup):
         results[code]['examples'].append(example)
     
-    for xref in find_crossreferences(soup):
-        results[code]['xrefs'].append(xref)
+    for crossref in find_crossreferences(soup):
+        results[code]['crossrefs'].append(crossref)
 
 with open(outfile, 'w') as out:
     dump(results, out, indent=2)
