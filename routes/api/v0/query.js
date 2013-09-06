@@ -1,15 +1,12 @@
 
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
     naics_2012          = require(process.cwd() + '/data/naics-2012'),
-    naics_2007_index    = require(process.cwd() + '/data/naics-2007-index'),
-    naics_2012_index    = require(process.cwd() + '/data/naics-2012-index'),
     naics_2012_desc     = require(process.cwd() + '/data/naics-2012-desc')
 
 exports.get = function ( req, res ) {
     var query = req.query
     var naics_year,
         naics_code,
-        naics_index,
         naics_desc,
         above,
         below,
@@ -18,8 +15,8 @@ exports.get = function ( req, res ) {
     if (query.year) {
         if (query.year == '2007' || query.year == '2012') {
 
-            if (query.year == '2007') { naics_year = naics_2007; naics_index = naics_2007_index }
-            if (query.year == '2012') { naics_year = naics_2012; naics_index = naics_2012_index; naics_desc = naics_2012_desc }
+            if (query.year == '2007') { naics_year = naics_2007 }
+            if (query.year == '2012') { naics_year = naics_2012; naics_desc = naics_2012_desc }
 
             naics_code = query.code
 
@@ -56,6 +53,7 @@ exports.get = function ( req, res ) {
                 for (var i = 0; i < naics_year.items.length; i++) {
                     the_item = getCode(naics_year, naics_year.items[i].code)
 
+                    // Collapse: this only shows descriptions??
                     if (query.collapse == '1') {
                         if (the_item.description) {
                             if (the_item.description.substring(0, 28) == 'See industry description for') continue;                            
@@ -98,9 +96,7 @@ exports.get = function ( req, res ) {
         if (naics_desc) {
             item.description = naics_desc[code]
         }
-        if (naics_index) {
-            item.index = naics_index[code]
-        }
+
 
         return item
     }
