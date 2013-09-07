@@ -48,7 +48,7 @@ def find_description(soup):
             text += link.string
             link = link.nextSibling
             if link.name is None:
-                text += link.string.strip()
+                text += link.string
 
         if text.strip():
             # Make sure string is not empty

@@ -30,7 +30,9 @@ def find_examples(soup):
             # Expected plain text here.
             return
         
-        yield unicode(el)
+        if el.strip():
+            # Make sure string is not empty
+            yield unicode(el.strip())
 
         el = el.nextSibling
     
