@@ -25,25 +25,47 @@ def find_description(soup):
         else:
             break
 
+    # For top-level 2-digit codes, the first line of the description is a "Sector as a Whole" subtitle in bold.
+    subtitle = el.findNextSibling('b')
+    if subtitle:
+        el = subtitle
+        yield el.string
+        el = el.nextSibling.nextSibling  # Skip <br>'s after this
+
     el = el.nextSibling # The description isn't contained in an element, so must get next sibling.
 
     while True:
+
         if el.name is not None:
             # Expected plain text here.
             return
-        
-        yield unicode(el.strip())
 
-        el = el.nextSibling
-    
+        if el.strip():
+            # Make sure string is not empty
+            yield unicode(el.strip())
+
         for i in range(2):
+            # There are supposed to be two breaks after each block of text
             el = el.nextSibling
-            
-            if el.name != 'br':
-                # There are supposed to be two breaks after each block of text
+
+            if not el:
+                # Nothing. End of NAICS entry.
                 return
 
-    # Stop when you hit Cross-references or Illustrative examples after two BR's
+            if el.name != 'br':
+                # Not a break, stop.
+                break
+
+        if el.name == 'br':
+            # This should be last <br>, next sibling should be text
+            el = el.nextSibling
+
+        # Stop when you hit Cross-references or Illustrative examples
+        if "Illustrative Examples:" in el:
+            return
+
+        if "Cross-References." in el:
+            return
 
 
 def find_description_code(soup):
@@ -81,7 +103,7 @@ for (index, row) in enumerate(rows):
 
     i = i + 1
 
-    if i == 20:
+    if i == 100:
         break
 
 #    code = row['2012 NAICS Code']
