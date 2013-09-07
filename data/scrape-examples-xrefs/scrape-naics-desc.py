@@ -104,22 +104,12 @@ except IndexError:
     print >> stderr, 'Usage: %s <output file name>' % argv[0]
     exit(1)
 
-# rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/6-digit_2012_Codes.csv')))
 rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/2-digit_2012_Codes.csv')))
-
-i = 0
 
 for (index, row) in enumerate(rows):
 
-    i = i + 1
-
-    if i == 10:
-        break
-
-#    code = row['2012 NAICS Code']
     code = row['2012 NAICS US   Code']
     
-#    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS Title']
     print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS US Title']
 
     q = dict(code=code, search='2012 NAICS Search')
