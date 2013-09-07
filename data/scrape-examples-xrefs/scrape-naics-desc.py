@@ -16,16 +16,16 @@ def find_description(soup):
         # Nothing.
         return
 
+    # The description comes after the last h3, so we need to find the last one:
     while el.name == 'h3':
-        print el.name
         # Go to next element if another h3 is encountered
-        new_el = el.findNext('h3')
-        if new_el:
-            el = new_el
+        next_el = el.findNext('h3')
+        if next_el:
+            el = next_el
         else:
             break
 
-    el = el.nextSibling
+    el = el.nextSibling # The description isn't contained in an element, so must get next sibling.
 
     while True:
         if el.name is not None:
