@@ -40,9 +40,19 @@ def find_description(soup):
             # Expected plain text here.
             return
 
-        if el.strip():
+        text = el
+
+        # Include text of "see other" links
+        link = el.findNextSibling('a')
+        if link:
+            text += link.string
+            link = link.nextSibling
+            if link.name is None:
+                text += link.string.strip()
+
+        if text.strip():
             # Make sure string is not empty
-            yield unicode(el.strip())
+            yield unicode(text.strip())
 
         for i in range(2):
             # There are supposed to be two breaks after each block of text
@@ -103,7 +113,7 @@ for (index, row) in enumerate(rows):
 
     i = i + 1
 
-    if i == 100:
+    if i == 10:
         break
 
 #    code = row['2012 NAICS Code']
