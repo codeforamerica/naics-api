@@ -89,6 +89,11 @@ def find_description_code(soup):
 
     el = el.nextSibling
 
+    if not el:
+        # Some 2007 codes do not actually link the number (we will have to manually get these?)
+        yield unicode('[parse problem]')
+        return
+
     if el.name != 'a':
         # Expected a link
         return
@@ -134,15 +139,16 @@ def find_examples(soup):
 def find_crossreferences(soup):
     '''
     '''
-    el = soup.find(text=compile(r'^Cross-References.'))
-    
+    el = soup.find(text=compile(r'^\s*Cross-References.'))
+    # Whitespace at beginning of string is present in 2007 codes.
+
     if not el:
         # Nothing.
         return
     
-    el = el.nextSibling.nextSibling.nextSibling
+    el = el.findNext('ul')
     
-    if el.name != 'ul':
+    if not el:
         # Expected an unordered list after some blank lines.
         return
     
@@ -165,15 +171,19 @@ except IndexError:
     print >> stderr, 'Usage: %s <output file name>' % argv[0]
     exit(1)
 
-rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/2-digit_2012_Codes.csv')))
+#rows = list(DictReader(urlopen('http://forever.codeforamerica.org.s3.amazonaws.com/NAICS/2-digit_2012_Codes.csv')))
+rows = list(DictReader(urlopen('https://gist.github.com/louh/6479528/raw/9ce661a10f14d3b9c29c34e70d50d61e791a3618/naics07.csv')))
 
 for (index, row) in enumerate(rows):
 
-    code = row['2012 NAICS US   Code']
-    
-    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS US Title']
+#    code = row['2012 NAICS US   Code']
+    code = row['2007 NAICS US Code']
 
-    q = dict(code=code, search='2012 NAICS Search')
+#    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2012 NAICS US Title']
+    print >> stderr, index + 1, 'of', len(rows), '-', code, '-', row['2007 NAICS US Title']
+
+#    q = dict(code=code, search='2012 NAICS Search')
+    q = dict(code=code, search='2007 NAICS Search')
     url = 'http://www.census.gov/cgi-bin/sssd/naics/naicsrch?' + urlencode(q)
     html = urlopen(url).read()
     soup = BeautifulSoup(html)
