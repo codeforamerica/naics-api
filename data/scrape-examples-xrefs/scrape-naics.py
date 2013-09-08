@@ -91,7 +91,7 @@ def find_description_code(soup):
 
     if not el:
         # Some 2007 codes do not actually link the number (we will have to manually get these?)
-        yield unicode('[parse problem]')
+        yield unicode('[link problem]')
         return
 
     if el.name != 'a':

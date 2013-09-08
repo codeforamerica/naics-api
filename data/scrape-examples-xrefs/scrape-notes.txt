@@ -1,0 +1,63 @@
+Scraper Notes
+-------------
+
+This is a python script that has a dependency on Beautiful Soup.
+
+Currently it has successfully scraped the following bits of information for 2007 and 2012 NAICS:
+
+	*  Descriptions
+	*  Illustrative Examples (2012 only)
+		- NOTE: 2007 does have illustrative examples in the PDF definition file, located at http://www.census.gov/eos/www/naics/2007NAICS/2007_Definition_File.pdf. However, thes are not provided on the online search tool.
+	*  Cross-references
+
+It has not scraped 2002 or earlier NAICS, other other types of information that may be available in machine-readable format elsewhere (e.g. index entries.)
+
+
+The script scrapes the NAICS Search page hosted by the U.S. Census: http://www.census.gov/eos/www/naics/index.html
+
+There are some irregularities or oddities in the formatting of these pages that may affect the output.  Some of the ones that can be programatically fixed on the fly have been applied to the script. However, some of them may have to be changed manually after running the scraper, in case the data needs to be scraped again. Here are the issues:
+
+	* 2007 Descriptions:
+		- There are 3 codes that start with "See industry description for" but the number was not linked by mistake. This is stored in the output as "[link problem]" for easy finding. The code can be manually written into the data. In addition, the description includes the word "below" which is a remnant of the PDF file but not usually included online, which can be edited to make it consistent. This affects NAICS codes:
+			518210
+			52111
+			5415
+			These have been manually corrected.
+	* 2007 Cross-references:
+		- A '\u00a0' (non-breaking space) is placed before the industry names. These can be manually replaced with a space via search and replace.
+		- Some NAICS cross-references codes are stored as null, because:
+			(1) There is no specific code to refer to. This is OK.
+			(2) There is a specific code to refer to, but it is was not linked in the original source by mistake.
+			(3) There is a specific code to refer to, but it was not linked on purpose. (This seems to be the default behavior for when two-digit level code is the cross reference.)
+
+			Of the three, #2 should be manually corrected. This only needs to be done for NAICS code 922150.
+
+			For #3, we might want to provide the code but this has not been done yet.
+		- Some cross-references that refer to Sector 44-45 have improperly placed it on a new bullet list item. (Search for '", Sector 44"' to find them.) (Compare it with the PDF version, which doesn't do that.) These are errors in the source but I've manually corrected them. The affected codes are: 
+			32799
+			327991
+			511210
+			56162
+			561621
+			561622
+	* 2012 Cross-references:
+		- Some NAICS cross-references codes are stored as null because it was not linked in the source by mistake. This affects codes 425110 and 561421. These are manually corrected.
+		- Code 561421 is also missing a space after the comma here, which I noticed because of the error above. This was manually correted.
+	    - 5 entries have an extraneous "\t" character in the cross reference string.
+	        541199
+	        541191
+	        541219
+	        541618
+	        311942
+	        These can be removed without affecting anything. They have been manually fixed.
+	* 2012 Illustrative Examples:
+	    - 8 examples have a "\t" character in the string:
+	    	54119
+	        541199
+	        236220
+	        326299 *replace with space
+	        237130
+	        812990
+	        423830
+	        541711
+	        Only one code should be replaced with a space, the rest can be removed as is. These have been manually fixed.

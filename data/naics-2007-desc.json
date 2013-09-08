@@ -2551,11 +2551,7 @@
         "code": "2123"
       }, 
       {
-        "text": "Buying and selling semifinished monuments and tombstones with no work other than polishing, lettering, or shaping to custom order--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade;", 
+        "text": "Buying and selling semifinished monuments and tombstones with no work other than polishing, lettering, or shaping to custom order--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade;", 
         "code": null
       }, 
       {
@@ -5077,11 +5073,7 @@
     "description_code": "", 
     "crossrefs": [
       {
-        "text": "Reselling packaged software--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade;", 
+        "text": "Reselling packaged software--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade;", 
         "code": null
       }, 
       {
@@ -5825,10 +5817,10 @@
     "examples": []
   }, 
   "51821": {
-    "description_code": "[parse problem]", 
+    "description_code": "518210", 
     "crossrefs": [], 
     "description": [
-      "See industry description for 518210 below"
+      "See industry description for 518210."
     ], 
     "examples": []
   }, 
@@ -6128,10 +6120,10 @@
     "examples": []
   }, 
   "52111": {
-    "description_code": "[parse problem]", 
+    "description_code": "521110", 
     "crossrefs": [], 
     "description": [
-      "See industry description for 521110 below"
+      "See industry description for 521110."
     ], 
     "examples": []
   }, 
@@ -8338,7 +8330,7 @@
     "crossrefs": [
       {
         "text": "Private establishments primarily engaged in providing parole or probation services--are classified in Industry 624190, Correctional Institutions; and", 
-        "code": null
+        "code": "624190"
       }, 
       {
         "text": "Government establishments primarily engaged in providing probation, parole, and pardon activities as an integral part of a central administrative corrections office are classified in Industry 922140, Correctional Institutions.", 
@@ -18161,11 +18153,7 @@
         "code": "2123"
       }, 
       {
-        "text": "Buying and selling semifinished monuments and tombstones with no work other than polishing, lettering, or shaping to custom order--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade.", 
+        "text": "Buying and selling semifinished monuments and tombstones with no work other than polishing, lettering, or shaping to custom order--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade.", 
         "code": null
       }
     ], 
@@ -23664,10 +23652,10 @@
     "examples": []
   }, 
   "5415": {
-    "description_code": "[parse problem]", 
+    "description_code": "54151", 
     "crossrefs": [], 
     "description": [
-      "See industry description for 54151 below."
+      "See industry description for 54151."
     ], 
     "examples": []
   }, 
@@ -27489,11 +27477,7 @@
     "description_code": "", 
     "crossrefs": [
       {
-        "text": "Selling security systems for buildings without installation, repair, or monitoring services--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade;", 
+        "text": "Selling security systems for buildings without installation, repair, or monitoring services--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade;", 
         "code": null
       }, 
       {
@@ -33215,11 +33199,7 @@
     "description_code": "", 
     "crossrefs": [
       {
-        "text": "Selling security alarm systems for buildings, without installation, repair, or monitoring services--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade", 
+        "text": "Selling security alarm systems for buildings, without installation, repair, or monitoring services--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade", 
         "code": null
       }, 
       {
@@ -33236,11 +33216,7 @@
     "description_code": "", 
     "crossrefs": [
       {
-        "text": "Selling security systems, such as locking devices, safes, and vaults, without installation or maintenance services--are classified in, Sector 42--Wholesale Trade or", 
-        "code": null
-      }, 
-      {
-        "text": ", Sector 44-45--Retail Trade; and", 
+        "text": "Selling security systems, such as locking devices, safes, and vaults, without installation or maintenance services--are classified in, Sector 42--Wholesale Trade or Sector 44-45--Retail Trade; and", 
         "code": null
       }, 
       {
