@@ -1,3 +1,4 @@
+"use strict"
 
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
 	naics_2012          = require(process.cwd() + '/data/naics-2012')
@@ -44,23 +45,25 @@ exports.get = function ( req, res ) {
 				}
 			}
 			else {
-				// return full year
+				// Return full year
 				var naics_full = []
 				var the_item
 
-				// add other information
+				// Some processing
 				for (var i = 0; i < naics_year.items.length; i++) {
-					the_item = getCode(naics_year, naics_year.items[i].code)
+					the_item = naics_year.items[i]
 
-					// Collapse: this only shows descriptions??
+					// If part_of_range exists, skip it from inclusion
+					if (the_item.part_of_range) continue
+
+					// Collapse: Undocumented feature to include only codes that are not blanks or referrals to other codes.
 					if (query.collapse == '1') {
-						if (the_item.description) {
-							if (the_item.description.substring(0, 28) == 'See industry description for') continue;                            
-						}
-						if (the_item.description == null) continue;
+						if (the_item.description_code) continue 
+						// Need to verify that if a description is empty then there is not other information for this code
+						if (the_item.description == null) continue
 					}
 
-					naics_full[naics_full.length] = getCode(naics_year, naics_year.items[i].code)
+					naics_full.push(the_item)
 				}
 
 				sendResults(naics_full);
