@@ -1,8 +1,6 @@
 
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
-    naics_2007_desc     = require(process.cwd() + '/data/naics-2007-desc')
-    naics_2012          = require(process.cwd() + '/data/naics-2012'),
-    naics_2012_desc     = require(process.cwd() + '/data/naics-2012-desc')
+    naics_2012          = require(process.cwd() + '/data/naics-2012')
 
 exports.get = function ( req, res ) {
     var query = req.query
@@ -16,8 +14,8 @@ exports.get = function ( req, res ) {
     if (query.year) {
         if (query.year == '2007' || query.year == '2012') {
 
-            if (query.year == '2007') { naics_year = naics_2007; naics_desc = naics_2007_desc }
-            if (query.year == '2012') { naics_year = naics_2012; naics_desc = naics_2012_desc }
+            if (query.year == '2007') { naics_year = naics_2007 }
+            if (query.year == '2012') { naics_year = naics_2012 }
 
             naics_code = query.code
 
@@ -84,45 +82,9 @@ exports.get = function ( req, res ) {
         for (var i = 0; i < year.items.length; i++) {
             if (year.items[i].code == code) {
 
-                assembleCode(year.items[i], code)
-
                 return year.items[i]
             }
         }
-    }
-
-    function assembleCode (item, code) {
-        // Add index and description to given code
-
-        if (naics_desc) {
-            var code = naics_desc[code]
-
-            if (code.description) {
-                if (code.description.length > 0) {
-                    item.description = code.description
-                }
-            }
-
-            if (code.description_code) {
-                if (code.description_code.length > 0) {
-                    item.description_code = code.description_code
-                }
-            }
-
-            if (code.examples) {
-                if (code.examples.length > 0) {
-                    item.examples = code.examples                
-                }
-            }
-
-            if (code.crossrefs) {
-                if (code.crossrefs.length > 0) {
-                    item.crossrefs = code.crossrefs
-                }
-            }
-        }
-
-        return item
     }
 
     function getAboveCode (year, code) {
