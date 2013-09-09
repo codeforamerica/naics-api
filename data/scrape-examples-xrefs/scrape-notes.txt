@@ -23,6 +23,8 @@ There are some irregularities or oddities in the formatting of these pages that 
 			52111
 			5415
 			These have been manually corrected.
+	* 2007/2012 Descriptions:
+	    - Two-digit level codes that are ranges (e.g. 44-45) did not get scraped descriptions. In general, something needs to be done to take care of these situations better.
 	* 2007 Cross-references:
 		- A '\u00a0' (non-breaking space) is placed before the industry names. These can be manually replaced with a space via search and replace.
 		- Some NAICS cross-references codes are stored as null, because:
