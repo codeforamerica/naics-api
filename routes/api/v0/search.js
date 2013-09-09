@@ -1,3 +1,4 @@
+'use strict'
 
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
 	naics_2012          = require(process.cwd() + '/data/naics-2012')

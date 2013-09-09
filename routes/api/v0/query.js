@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 var naics_2007          = require(process.cwd() + '/data/naics-2007'),
 	naics_2012          = require(process.cwd() + '/data/naics-2012')
@@ -56,11 +56,23 @@ exports.get = function ( req, res ) {
 					// If part_of_range exists, skip it from inclusion
 					if (the_item.part_of_range) continue
 
-					// Collapse: Undocumented feature to include only codes that are not blanks or referrals to other codes.
+					// Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
 					if (query.collapse == '1') {
 						if (the_item.description_code) continue 
-						// Need to verify that if a description is empty then there is not other information for this code
 						if (the_item.description == null) continue
+					}
+
+					// TitlesOnly: Undocumented and experimental feature to remove things so only title and code are returned (keeps things like navigation loading simpler)
+					if (query.titlesonly == '1') {
+
+						// Clone the original
+						the_item = JSON.parse(JSON.stringify(naics_year.items[i]))
+
+						var toDelete = ['description', 'description_code', 'crossrefs', 'examples', 'trilateral', 'change_indicator', 'seq_no', 'index']
+						for (var key in toDelete) {
+							var x = toDelete[key]
+							if (the_item[x]) delete the_item[x]
+						}
 					}
 
 					naics_full.push(the_item)
