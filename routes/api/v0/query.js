@@ -98,12 +98,10 @@ exports.get = function ( req, res ) {
 	function getAboveCode (year, code) {
 		// Given a NAICS code, returns an array of all NAICS codes above it on the hierarchy.
 		// Returns an empty object or an object with null if there is nothing found
-		// If the top level (2-digit) NAICS code is a range (e.g. 31-33), this is broken. It returns a null item instead of the NAICS data.
-
 		var collection = []
 
 		for (var i = 2; i < code.length; i++) {
-			collection[collection.length] = getCode(year, code.substr(0, i))
+			collection.push(getCode(year, code.substr(0, i)))
 		}
 		return collection;
 	}
@@ -111,14 +109,14 @@ exports.get = function ( req, res ) {
 	function getBelowCode (year, code) {
 		// Given a NAICS code, returns an array of all NAICS codes below it on the hierarchy.
 		// Returns an empty object or an object with null if there is nothing found
-		// If the top level (2-digit) NAICS code is a range (e.g. 31-33), this is broken.
-		// However if you try to get codes using just the two-digit range (e.g. '31' instead, or '32' it will sort of work.)
-
 		var collection = []
- 
 		for (var i = 0; i < year.items.length; i++) {
 			if (year.items[i].code.toString().substr(0, code.length) == code && year.items[i].code != code) {
-				collection[collection.length] = getCode(year.items[i], year.items[i].code)
+
+				// A hacky way of NOT including the top level ranged code if it is one
+				if (year.items[i].code.toString().substr(2,1) == '-') continue
+
+				collection.push(year.items[i])
 			}
 		}
 		return collection;
