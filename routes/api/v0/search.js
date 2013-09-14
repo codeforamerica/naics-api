@@ -18,7 +18,7 @@ exports.get = function ( req, res ) {
 
 			if (query.terms) {
 
-				var collection
+				var collection, the_item
 
 				// have a complete array ready for search
 				for (var i = 0; i < naics_year.items.length; i++) {
