@@ -18,21 +18,26 @@ exports.get = function ( req, res ) {
 
 			if (query.terms) {
 
-				var collection, the_item
-
 				// have a complete array ready for search
-				for (var i = 0; i < naics_year.items.length; i++) {
-					the_item = naics_year.items[i]
+				var collection = naics_year.items
 
-					// Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
-					if (query.collapse == '1') {
-						if (the_item.description_code) continue 
-						if (the_item.description == null) continue
+				// Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
+				if (query.collapse == '1') {
+
+					collection = []
+					var the_item
+
+					for (var i = 0; i < naics_year.items.length; i++) {
+						the_item = naics_year.items[i]
+
+						if (the_item.code.toString().length != 6) continue
+	//					if (the_item.description_code) continue 
+	//					if (the_item.description == null) continue
+
+						collection.push(the_item)
 					}
 
-					collection.push(the_item)
 				}
-
 
 				// create search objects from query
 				var terms = query.terms
