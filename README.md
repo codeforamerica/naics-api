@@ -1,4 +1,4 @@
-# naics-api
+# NAICS-API
 
 [NAICS](http://www.census.gov/eos/www/naics/) (North American Industry Classification System) is maintained by the United States Bureau of Labor Statistics to classify business types. It is used for aggregating, presenting, and analyzing data and trends in the US economy.
 
@@ -8,25 +8,11 @@ The classification system is currently hosted by the [Census Bureau](http://www.
 
 NAICS API is currently a Node.js server that returns NAICS data in a JSON format. Information stored on the server has been scraped or collected from files on the Census.gov web site. Most of the information for 2007 and 2012 has now been scraped thanks to the addition of a python scraper by Mike Migurski (see ``./data/scrape-examples-xrefs``).
 
-* [NAICS API server](https://api.naics.us/)
-
-* [NAICS API documentation](http://docs.naicsapi.apiary.io/)
-
-
-### Additional information
-
-* An early NAICS scraper at [daguar/naics-scraper](https://github.com/daguar/naics-scraper/))
-* Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1)
-* Ongoing progress report at [codeforamerica/hack-requests](https://github.com/codeforamerica/hack-requests/blob/master/naics-api.md)
-
-
-#### API documentation
+### API documentation
 
 [Latest API documentation is hosted at Apiary.io.](http://docs.naicsapi.apiary.io/)
 
-## Examples
-
-#### API requests
+### API example requests
 
 Example request
 
@@ -55,11 +41,20 @@ To get all NAICS codes for given search terms (searches only title and index rig
 
 __Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).
 
-#### Usage
+
+### Usage
 
 * A simple example demo search interface for NAICS codes [site](http://louh.github.io/naics-search) and [repository](https://github.com/louh/naics-search)
 
 * Work in progress real-world application [site](http://lv-dof-staging.herokuapp.com/) and [repository](https://github.com/rclosner/lv-dof)
+
+
+### Additional information
+
+* An early NAICS scraper at [daguar/naics-scraper](https://github.com/daguar/naics-scraper/))
+* Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1)
+* Ongoing progress report at [codeforamerica/hack-requests](https://github.com/codeforamerica/hack-requests/blob/master/naics-api.md)
+
 
 ## Development setup (on Mac OS X 10.8)
 
@@ -101,12 +96,13 @@ There are other data that can be included in the API. Not all of these are withi
 On the API side:
 
 * The API should perform searches on all the available data and return relevant results from the requester (e.g. a business type lookup application)
-* Close [existing issues](https://github.com/louh/naics-api/issues?state=open)
+* Close [existing issues][issues].
 
 ### Submitting an Issue
 We use the [GitHub issue tracker][issues] to track bugs and features. Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. When submitting a bug report, please include a [Gist][] that includes a stack trace and any details that may be necessary to reproduce the bug, including your gem version, Ruby version, and operating system. Ideally, a bug report should include a pull request with failing specs.
 
 [gist]: https://gist.github.com/
+[issues]: https://github.com/codeforamerica/naics-api/issues?&state=open
 
 ### Submitting a Pull Request
 1. [Fork the repository.][fork]
