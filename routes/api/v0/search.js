@@ -20,7 +20,7 @@ exports.get = function ( req, res ) {
 			if (query.terms) {
 			
 			    // Quickly look up NAICS codes by search terms.
-			    var results = index_year[query.terms];
+			    var results = index_year[query.terms.toLowerCase()];
 			    
 			    // Build array of matching NAICS items.
 			    var items = [];
@@ -31,7 +31,7 @@ exports.get = function ( req, res ) {
 			    }
 			    
 			    // Sort with highest-scored items first.
-			    items.sort(function(a, b) { return results[b.code] - results[a.code] });
+			    items.sort(function(a, b) { return (results[b.code] - b.code.toString().length*2) - (results[a.code] - a.code.toString().length*2) });
 			
 			    // Send JSON to client
 			    res.send(items);
