@@ -1,11 +1,11 @@
 'use strict'
 
-var naics_2007          = require(process.cwd() + '/data/naics-2007'),
-	naics_2012          = require(process.cwd() + '/data/naics-2012')
+var codes_2007 = require(process.cwd() + '/data/codes-2007'),
+	  codes_2012 = require(process.cwd() + '/data/codes-2012');
 
 exports.get = function ( req, res ) {
 	var query = req.query
-	var naics_year,
+	var codes_year,
 		naics_code,
 		naics_desc,
 		above,
@@ -15,24 +15,24 @@ exports.get = function ( req, res ) {
 	if (query.year) {
 		if (query.year == '2007' || query.year == '2012') {
 
-			if (query.year == '2007') { naics_year = naics_2007 }
-			if (query.year == '2012') { naics_year = naics_2012 }
+			if (query.year == '2007') { codes_year = codes_2007 }
+			if (query.year == '2012') { codes_year = codes_2012 }
 
 			naics_code = query.code
 
 			if (naics_code) {
 				
 				// Get a single code entry
-				item = getCode(naics_year, naics_code)
+				item = getCode(codes_year, naics_code)
 
 				// If user wants NAICS codes above or below it on the hierarchy.
 				if (query.above == 1) {
-					above = getAboveCode(naics_year, naics_code)
+					above = getAboveCode(codes_year, naics_code)
 					sendResults(above)
 				}
 
 				if (query.below == 1) {
-					below = getBelowCode(naics_year, naics_code)
+					below = getBelowCode(codes_year, naics_code)
 					sendResults(below)
 				}
 
@@ -50,33 +50,28 @@ exports.get = function ( req, res ) {
 				var the_item
 
 				// Some processing
-				for (var i = 0; i < naics_year.items.length; i++) {
-					the_item = naics_year.items[i]
+        var codes = Object.keys(codes_year);
+        for (var i = 0; i < codes.length; i++) {
+          var code = codes[i];
+          var item = codes_year[code];
 
 					// If part_of_range exists, skip it from inclusion
-					if (the_item.part_of_range) continue
+          if (item.part_of_range) continue;
 
-					// Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
+          // Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
 					if (query.collapse == '1') {
-						if (the_item.description_code) continue 
-						if (the_item.description == null) continue
+						if (item.description_code) continue 
+						if (item.description == null) continue
 					}
 
-					// TitlesOnly: Undocumented and experimental feature to remove things so only title and code are returned (keeps things like navigation loading simpler)
+          // TitlesOnly: Undocumented and experimental feature to remove things so only title and code are returned (keeps things like navigation loading simpler)
 					if (query.titlesonly == '1') {
-
 						// Clone the original
-						the_item = JSON.parse(JSON.stringify(naics_year.items[i]))
-
-						var toDelete = ['description', 'description_code', 'crossrefs', 'examples', 'trilateral', 'change_indicator', 'seq_no', 'index']
-						for (var key in toDelete) {
-							var x = toDelete[key]
-							if (the_item[x]) delete the_item[x]
-						}
+            item = { title: item.title }
 					}
 
-					naics_full.push(the_item)
-				}
+          naics_full.push(item);
+        }
 
 				sendResults(naics_full);
 			}
@@ -93,28 +88,20 @@ exports.get = function ( req, res ) {
 	}
 
 	function getCode (year, code) {
-		// Returns information for a given NAICS code
-		for (var i = 0; i < year.items.length; i++) {
-			if (year.items[i].code == code) {
-
-				// if code is in a range, get the actual ranged code
-				if (year.items[i].part_of_range) {
-					return getCode(year, year.items[i].part_of_range)
-				}
-
-				return year.items[i]
-			}
-		}
+    return year[code];
 	}
 
 	function getAboveCode (year, code) {
 		// Given a NAICS code, returns an array of all NAICS codes above it on the hierarchy.
 		// Returns an empty object or an object with null if there is nothing found
-		var collection = []
+		var collection = [];
+    var codes = Object.keys(year);
 
-		for (var i = 2; i < code.length; i++) {
-			collection.push(getCode(year, code.substr(0, i)))
-		}
+    for (var i = codes.length; i > 0; i--) {
+      var c = year[code.substr(0, code.length - i)];
+      if (c !== undefined) collection.push(c);
+    }
+
 		return collection;
 	}
 
@@ -122,17 +109,15 @@ exports.get = function ( req, res ) {
 		// Given a NAICS code, returns an array of all NAICS codes below it on the hierarchy.
 		// Returns an empty object or an object with null if there is nothing found
 		var collection = []
-		for (var i = 0; i < year.items.length; i++) {
-			if (year.items[i].code.toString().substr(0, code.length) == code && year.items[i].code != code) {
+    var codes = Object.keys(year);
 
-				// A hacky way of NOT including the top level ranged code if it is one
-				if (year.items[i].code.toString().substr(2,1) == '-') continue
+    for (var i = 0; i < codes.length; i++) {
+      var c = codes[i];
+      if (c.length > code.length && c.substr(0, code.length) == code) collection.push(year[c]);
+    }
 
-				collection.push(year.items[i])
-			}
-		}
-		return collection;
-	}
+    return collection;
+  }
 
 	function returnError (http_status, error_msg) {
 		// Generic error message function
