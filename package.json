@@ -10,8 +10,7 @@
   "dependencies": {
     "config": "0.4.x",
     "requireindex" : "1.0.x",
-    "restify" : "2.5.x",
-    "searchjs" : "0.2.x"
+    "restify" : "2.5.x"
   },
   "devDependencies": {
     "jasmine-node": "1.6.x",

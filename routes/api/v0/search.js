@@ -1,54 +1,40 @@
 'use strict'
 
-var naics_2007          = require(process.cwd() + '/data/naics-2007'),
-	naics_2012          = require(process.cwd() + '/data/naics-2012')
-var searchjs            = require('searchjs')
-
+var codes_2007          = require(process.cwd() + '/data/codes-2007'),
+	codes_2012          = require(process.cwd() + '/data/codes-2012'),
+	index_2007          = require(process.cwd() + '/data/index-2007'),
+	index_2012          = require(process.cwd() + '/data/index-2012')
 
 exports.get = function ( req, res ) {
 	var query = req.query
-	var naics_year,
+	var codes_year,
+		index_year,
 		naics_desc
 
 	if (query.year) {
 		if (query.year == '2007' || query.year == '2012') {
 
-			if (query.year == '2007') { naics_year = naics_2007 }
-			if (query.year == '2012') { naics_year = naics_2012 }
+			if (query.year == '2007') { codes_year = codes_2007; index_year = index_2007 }
+			if (query.year == '2012') { codes_year = codes_2012; index_year = index_2012 }
 
 			if (query.terms) {
-
-				// have a complete array ready for search
-				var collection = naics_year.items
-
-				// Collapse: Undocumented and experimental feature to include only codes that are not blanks or referrals to other codes.
-				if (query.collapse == '1') {
-
-					collection = []
-					var the_item
-
-					for (var i = 0; i < naics_year.items.length; i++) {
-						the_item = naics_year.items[i]
-
-						if (the_item.code.toString().length != 6) continue
-	//					if (the_item.description_code) continue 
-	//					if (the_item.description == null) continue
-
-						collection.push(the_item)
-					}
-
-				}
-
-				// create search objects from query
-				var terms = query.terms
-
-				var jsql = {_join: 'OR', title: terms, index: terms, description: terms, _text: true}
-
-				// search using searchjs
-				var matches = searchjs.matchArray(collection, jsql)
-
-				// Send to user
-				res.send(matches)
+			
+			    // Quickly look up NAICS codes by search terms.
+			    var results = index_year[query.terms];
+			    
+			    // Build array of matching NAICS items.
+			    var items = [];
+			    
+			    for(var code in results)
+			    {
+			        items.push(codes_year[code])
+			    }
+			    
+			    // Sort with highest-scored items first.
+			    items.sort(function(a, b) { return results[b.code] - results[a.code] });
+			
+			    // Send JSON to client
+			    res.send(items);
 
 			}
 			else {
