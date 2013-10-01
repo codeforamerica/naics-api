@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NAICS R US</title>
+  <style type="text/css">
+  <!--
+  
+    td
+    {
+      vertical-align: top;
+      min-width: 320px;
+    }
+  
+    td.example
+    {
+      white-space: pre;
+      font-family: monospace;
+    }
+  
+  -->
+  </style>
+</head>
+<body>
+
+  <h1>NAICS API</h1>
+
+  <p>
+  The <a href="http://www.census.gov/eos/www/naics/">North American Industry Classification System</a>
+  (NAICS) is used by the U.S. Federal Government to organize different types of
+  businesses economic analysis purposes, and while there are different types of
+  numbering systems out there that do this, a lot of local municipalities have
+  also started adopting it for their own business classification purposes. The
+  NAICS codes and descriptions are revised every five years (latest: 2012;
+  next: 2017), and while information is freely provided as PDFs or Excel
+  spreadsheets and hosted by the U.S. Census Bureau, no machine-readable API
+  exists for retrieving this data that can be easily used in applications.
+  Until now.
+  </p>
+  
+  <table>
+    <tr>
+      <td>
+        <h3>One NAICS Code</h3>
+      </td>
+      <td class="example">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4>Endpoint</h4>
+        <p>/v0/q</p>
+      
+        <h4>Arguments</h4>
+        
+        <dl>
+          <dt>year</dt>
+          <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
+          <dt>code</dt>
+          <dd>The NAICS code to retrieve.</dd>
+        </dl>
+        
+        <h4>Response Dictionary</h4>
+          <dt>code</dt><dd>2-6 digit NAICS code.</dd>
+          <dt>title</dt><dd>Name of the NAICS code.</dd>
+          <dt>seq_no</dt><dd>Sequence number. Appears to be used as a primary key in databases by some agencies.</dd>
+          <dt>change_indicator (2012 NAICS only)</dt><dd>If present, indicates whether this code changed from the previous (2007) NAICS.<br>1 = title changed from 2007 NAICS, but no content has changed.<br>2 = new code in 2012 NAICS.<br>3 = content changed from 2007 NAICS, and title may or may not have changed.</dd>
+          <dt>trilateral (2012 NAICS only)</dt><dd>If present, indicates that there is a trilateral agreement between Canada, Mexico, and the United States to use a comparable definition of this industry for this code.</dd>
+          <dt>description</dt><dd>If present, a text description in an array of paragraph strings.</dd>
+          <dt>description_code</dt><dd>If present, refers to another NAICS code description. If present, ignore the given description.</dd>
+          <dt>examples</dt><dd>If present, an array of illustrative examples.</dd>
+          <dt>crossrefs</dt><dd>If present, an array of cross-references to other NAICS codes that should be used to fine-tune a business classification. Both the text description of a cross-reference and its reference NAICS code is provided.</dd>
+          <dt>index (2012 6-digit codes only)</dt><dd> If present, an array of other titles that belong under this NAICS code. Useful as a keyword search to determine where specific businesses should be classified.<br><em>NOTE: Index entries exist for 2007 but are not currently available in NAICS API.</em></dd>
+      </td>
+      <td class="example">
+Definition
+http://localhost:3000/v0/q?year={year}&amp;code={code}
+
+Example Request
+http://localhost:3000/v0/q?year=2012&amp;code=519120
+
+Response
+{
+  "code": 519120, 
+  "title": "Libraries and Archives", 
+  "seq_no": 1475, 
+  "description": [
+    "This industry comprises establishments primarily
+     engaged in providing library or archive services.
+     These establishments are engaged in maintaining
+     collections and facilitating the use of such documents
+     as are required to meet the informational, research,
+     educational, or recreational needs of their user."
+  ], 
+  "crossrefs": [
+    {
+      "code": "512199", 
+      "text": "Providing stock footage to the media,
+           multimedia, and advertising industries
+           --are classified in U.S. Industry 512199,
+           Other Motion Picture and Video Industries;"
+    }, 
+    ...
+  ], 
+  "index": [
+    "Archives", 
+    "Bookmobiles", 
+    "Centers for documentation (i.e., archives)", 
+    ...
+  ]
+}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3>Searching for a NAICS code</h3>
+      </td>
+      <td class="example">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4>Endpoint</h4>
+        <p>/v0/s</p>
+      
+        <h4>Arguments</h4>
+        
+        <dl>
+          <dt>year</dt>
+          <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
+          <dt>code</dt>
+          <dd>The NAICS code to retrieve descendant codes for.</dd>
+          <dt>below</dt>
+          <dd><samp>1</samp> To include descendant codes.</dd>
+        </dl>
+      </td>
+      <td class="example">
+Definition
+http://localhost:3000/v0/s?year={year}&amp;terms={search}
+
+Example Request
+http://localhost:3000/v0/s?year=2012&amp;terms=Internet
+
+Response
+[
+  {
+    "code": 511, 
+    "description": [
+      "Industries in the Publishing Industries (except Internet)
+       subsector group establishments engaged in the publishing
+       of newspapers, magazines, other periodicals, and books,
+       as well as directory and mailing list and software
+       publishing.", 
+      ...
+    ], 
+    "seq_no": 1403, 
+    "title": "Publishing Industries (except Internet)", 
+    "trilateral": 1
+  }, 
+  {
+    "code": 515, 
+    "title": "Broadcasting (except Internet)", 
+    ...
+  }, 
+  {
+    "code": 519130, 
+    "title": "Internet Publishing and Broadcasting and Web Search Portals", 
+    ...
+  }, 
+  ...
+]
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3>All NAICS information for a year</h3>
+      </td>
+      <td class="example">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>
+          Complete information for a single year is available in one API
+          request. The returned data will be <em>large</em>, up to 2.5MB
+          for 2012 data.
+        </p>
+      
+        <h4>Endpoint</h4>
+        <p>/v0/q</p>
+      
+        <h4>Arguments</h4>
+        
+        <dl>
+          <dt>year</dt>
+          <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
+        </dl>
+      </td>
+      <td class="example">
+Definition
+http://localhost:3000/v0/q?year={year}
+
+Example Request
+http://localhost:3000/v0/q?year=2012
+
+Response
+[
+  {
+    "code": 11,
+    "title": "Agriculture, Forestry, Fishing and Hunting", 
+    "description":
+    [
+      "The Sector as a Whole",
+      "The Agriculture, Forestry, Fishing and Hunting
+       sector comprises establishments primarily engaged
+       in growing crops, raising animals, harvesting timber,
+       and harvesting fish and other animals from a farm,
+       ranch, or their natural habitats."
+    ], 
+    ...
+  },
+  {
+    "code": 21, 
+    "title": "Mining, Quarrying, and Oil and Gas Extraction", 
+    "description": [ "The Sector as a Whole", ... ],
+    ...
+  },
+  
+  ...
+]
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3>Parent Codes</h3>
+      </td>
+      <td class="example">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4>Endpoint</h4>
+        <p>/v0/q</p>
+      
+        <h4>Arguments</h4>
+        
+        <dl>
+          <dt>year</dt>
+          <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
+          <dt>code</dt>
+          <dd>The NAICS code to retrieve parent codes for.</dd>
+          <dt>above</dt>
+          <dd><samp>1</samp> To include parent codes.</dd>
+        </dl>
+      </td>
+      <td class="example">
+Definition        
+http://localhost:3000/v0/q?year={year}&amp;code={code}&amp;above=1
+
+Example Request
+http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;above=1
+
+Response
+[
+  {
+    "code": 51, 
+    "title": "Information", 
+    "description": [
+      "The Sector as a Whole", 
+      "The Information sector comprises establishments engaged...", 
+      ...
+    ], 
+    ...
+  }, 
+  {
+    "code": 519, 
+    "title": "Other Information Services", 
+    "description": [
+      "Industries in the Other Information Services subsector...",
+      ...
+    ],
+    ...
+  }
+]
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3>Descendant Codes</h3>
+      </td>
+      <td class="example">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4>Endpoint</h4>
+        <p>/v0/q</p>
+      
+        <h4>Arguments</h4>
+        
+        <dl>
+          <dt>year</dt>
+          <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
+          <dt>code</dt>
+          <dd>The NAICS code to retrieve descendant codes for.</dd>
+          <dt>below</dt>
+          <dd><samp>1</samp> To include descendant codes.</dd>
+        </dl>
+      </td>
+      <td class="example">
+Example Request
+http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;below=1
+
+Response
+[
+  {
+    "code": 51911, 
+    "title": "News Syndicates", 
+    "description": [
+      "See industry description for 519110."
+    ], 
+    "description_code": "519110", 
+    ...
+  }, 
+  {
+    "code": 519110, 
+    "title": "News Syndicates", 
+    "description": [
+      "This industry comprises establishments primarily engaged
+       in supplying information, such as news reports, articles,
+       pictures, and features, to the news media."
+    ], 
+    ...
+  }, 
+  ...
+]
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
