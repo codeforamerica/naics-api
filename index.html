@@ -17,6 +17,14 @@
       white-space: pre;
       font-family: monospace;
     }
+    
+    td.example h4
+    {
+        font-size: 100%;
+        margin: 0;
+        padding: 0;
+        display: inline;
+    }
   
   -->
   </style>
@@ -26,32 +34,35 @@
   <h1>NAICS API</h1>
 
   <p>
-  The <a href="http://www.census.gov/eos/www/naics/">North American Industry Classification System</a>
-  (NAICS) is used by the U.S. Federal Government to organize different types of
-  businesses economic analysis purposes, and while there are different types of
-  numbering systems out there that do this, a lot of local municipalities have
-  also started adopting it for their own business classification purposes. The
-  NAICS codes and descriptions are revised every five years (latest: 2012;
-  next: 2017), and while information is freely provided as PDFs or Excel
-  spreadsheets and hosted by the U.S. Census Bureau, no machine-readable API
-  exists for retrieving this data that can be easily used in applications.
-  Until now.
+    The <a href="http://www.census.gov/eos/www/naics/">North American Industry Classification System</a>
+    (NAICS) is used by the U.S. Federal Government to organize different types of
+    businesses economic analysis purposes, and while there are different types of
+    numbering systems out there that do this, a lot of local municipalities have
+    also started adopting it for their own business classification purposes. The
+    NAICS codes and descriptions are revised every five years (latest: 2012;
+    next: 2017), and while information is freely provided as PDFs or Excel
+    spreadsheets and hosted by the U.S. Census Bureau, no machine-readable API
+    exists for retrieving this data that can be easily used in applications.
+    Until now.
   </p>
   
   <table>
     <tr>
-      <td>
-        <h3>One NAICS Code</h3>
-      </td>
-      <td class="example">
+      <td colspan="2">
+        <h2>One NAICS Code</h2>
       </td>
     </tr>
     <tr>
       <td>
-        <h4>Endpoint</h4>
+        <p>
+          Retrieve available data for a single NAICS code from a given year,
+          including title, description, cross references, and index text.
+        </p>
+      
+        <h3>Endpoint</h3>
         <p>/v0/q</p>
       
-        <h4>Arguments</h4>
+        <h3>Arguments</h3>
         
         <dl>
           <dt>year</dt>
@@ -60,7 +71,7 @@
           <dd>The NAICS code to retrieve.</dd>
         </dl>
         
-        <h4>Response Dictionary</h4>
+        <h3>Response Dictionary</h3>
           <dt>code</dt><dd>2-6 digit NAICS code.</dd>
           <dt>title</dt><dd>Name of the NAICS code.</dd>
           <dt>seq_no</dt><dd>Sequence number. Appears to be used as a primary key in databases by some agencies.</dd>
@@ -73,13 +84,13 @@
           <dt>index (2012 6-digit codes only)</dt><dd> If present, an array of other titles that belong under this NAICS code. Useful as a keyword search to determine where specific businesses should be classified.<br><em>NOTE: Index entries exist for 2007 but are not currently available in NAICS API.</em></dd>
       </td>
       <td class="example">
-Definition
+<h4>Definition</h4>
 http://localhost:3000/v0/q?year={year}&amp;code={code}
 
-Example Request
-http://localhost:3000/v0/q?year=2012&amp;code=519120
+<h4>Example Request</h4>
+<a href="http://localhost:3000/v0/q?year=2012&amp;code=519120">http://localhost:3000/v0/q?year=2012&amp;code=519120</a>
 
-Response
+<h4>Response</h4>
 {
   "code": 519120, 
   "title": "Libraries and Archives", 
@@ -112,36 +123,39 @@ Response
       </td>
     </tr>
     <tr>
-      <td>
-        <h3>Searching for a NAICS code</h3>
-      </td>
-      <td class="example">
+      <td colspan="2">
+        <h2>Searching for a NAICS code</h2>
       </td>
     </tr>
     <tr>
       <td>
-        <h4>Endpoint</h4>
+        <p>
+          Search for NAICS codes by term, get a list of matching codes in
+          approximate order of relevance.
+        </p>
+      
+        <h3>Endpoint</h3>
         <p>/v0/s</p>
       
-        <h4>Arguments</h4>
+        <h3>Arguments</h3>
         
         <dl>
           <dt>year</dt>
           <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
           <dt>code</dt>
           <dd>The NAICS code to retrieve descendant codes for.</dd>
-          <dt>below</dt>
-          <dd><samp>1</samp> To include descendant codes.</dd>
+          <dt>terms</dt>
+          <dd>Words to use when searching. Single words or pairs of words are best here, such as “software” or “software publishing”.</dd>
         </dl>
       </td>
       <td class="example">
-Definition
-http://localhost:3000/v0/s?year={year}&amp;terms={search}
+<h4>Definition</h4>
+http://localhost:3000/v0/s?year={year}&amp;terms={search terms}
 
-Example Request
-http://localhost:3000/v0/s?year=2012&amp;terms=Internet
+<h4>Example Request</h4>
+<a href="http://localhost:3000/v0/s?year=2012&amp;terms=Internet">http://localhost:3000/v0/s?year=2012&amp;terms=Internet</a>
 
-Response
+<h4>Response</h4>
 [
   {
     "code": 511, 
@@ -172,24 +186,21 @@ Response
       </td>
     </tr>
     <tr>
-      <td>
-        <h3>All NAICS information for a year</h3>
-      </td>
-      <td class="example">
+      <td colspan="2">
+        <h2>All NAICS information for a year</h2>
       </td>
     </tr>
     <tr>
       <td>
         <p>
           Complete information for a single year is available in one API
-          request. The returned data will be <em>large</em>, up to 2.5MB
-          for 2012 data.
+          request. The returned data will be large, up to 2.5MB for 2012 data.
         </p>
       
-        <h4>Endpoint</h4>
+        <h3>Endpoint</h3>
         <p>/v0/q</p>
       
-        <h4>Arguments</h4>
+        <h3>Arguments</h3>
         
         <dl>
           <dt>year</dt>
@@ -197,13 +208,13 @@ Response
         </dl>
       </td>
       <td class="example">
-Definition
+<h4>Definition</h4>
 http://localhost:3000/v0/q?year={year}
 
-Example Request
+<h4>Example Request</h4>
 http://localhost:3000/v0/q?year=2012
 
-Response
+<h4>Response</h4>
 [
   {
     "code": 11,
@@ -231,18 +242,22 @@ Response
       </td>
     </tr>
     <tr>
-      <td>
-        <h3>Parent Codes</h3>
-      </td>
-      <td class="example">
+      <td colspan="2">
+        <h2>Parent Codes</h2>
       </td>
     </tr>
     <tr>
       <td>
-        <h4>Endpoint</h4>
+        <p>
+          NAICS is a nested and hierarchical data set. For example, libraries
+          and archives are a subcategory to information services. Retrieve a
+          complete list of parent codes for a given code.
+        </p>
+      
+        <h3>Endpoint</h3>
         <p>/v0/q</p>
       
-        <h4>Arguments</h4>
+        <h3>Arguments</h3>
         
         <dl>
           <dt>year</dt>
@@ -250,17 +265,17 @@ Response
           <dt>code</dt>
           <dd>The NAICS code to retrieve parent codes for.</dd>
           <dt>above</dt>
-          <dd><samp>1</samp> To include parent codes.</dd>
+          <dd><samp>1</samp> to include parent codes.</dd>
         </dl>
       </td>
       <td class="example">
-Definition        
+<h4>Definition</h4>
 http://localhost:3000/v0/q?year={year}&amp;code={code}&amp;above=1
 
-Example Request
-http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;above=1
+<h4>Example Request</h4>
+<a href="http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;above=1">http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;above=1</a>
 
-Response
+<h4>Response</h4>
 [
   {
     "code": 51, 
@@ -285,18 +300,22 @@ Response
       </td>
     </tr>
     <tr>
-      <td>
-        <h3>Descendant Codes</h3>
-      </td>
-      <td class="example">
+      <td colspan="2">
+        <h2>Descendant Codes</h2>
       </td>
     </tr>
     <tr>
       <td>
-        <h4>Endpoint</h4>
+        <p>
+          NAICS is a nested and hierarchical data set. For example, information
+          services include news syndicates as a subcategory. Retrieve a
+          complete list of descendant codes for a given code.
+        </p>
+      
+        <h3>Endpoint</h3>
         <p>/v0/q</p>
       
-        <h4>Arguments</h4>
+        <h3>Arguments</h3>
         
         <dl>
           <dt>year</dt>
@@ -304,14 +323,17 @@ Response
           <dt>code</dt>
           <dd>The NAICS code to retrieve descendant codes for.</dd>
           <dt>below</dt>
-          <dd><samp>1</samp> To include descendant codes.</dd>
+          <dd><samp>1</samp> to include descendant codes.</dd>
         </dl>
       </td>
       <td class="example">
-Example Request
-http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;below=1
+<h4>Definition</h4>
+http://localhost:3000/v0/q?year={year}&amp;code={code}&amp;below=1
 
-Response
+<h4>Example Request</h4>
+<a href="http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;below=1">http://localhost:3000/v0/q?year=2012&amp;code=5191&amp;below=1</a>
+
+<h4>Response</h4>
 [
   {
     "code": 51911, 
