@@ -12,13 +12,11 @@ app.use(restify.fullResponse())
 // Routes
 app.get('/', function (req, res, next)
   {
-    fs.readFile(__dirname + '/index.html', function (err, data)
-      {
-        res.status(200)
-        res.header('Content-Type', 'text/html')
-        res.end(data)
-        next()
-      });
+    var data = fs.readFileSync(__dirname + '/index.html');
+
+    res.status(200);
+    res.header('Content-Type', 'text/html');
+    res.end(data.toString().replace(/host:port/g, req.header('Host')));
   });
 
 app.get('/v0/q', api.v0.query.get)
