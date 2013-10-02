@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>NAICS R US</title>
+  <title>NAICS API by Code for America</title>
+  <link rel="stylesheet" href="http://www.openstreetmap.us/~migurski/style.css" />
   <style type="text/css">
   <!--
+  
+    h2 a, h3 a
+    {
+      font-weight: normal;
+      text-decoration: none;
+      opacity: 0.35;
+    }
+    
+    dd
+    {
+      margin-left: 1em;
+    }
+  
+    table
+    {
+      width: 90%;
+    }
   
     td
     {
@@ -16,6 +34,7 @@
     {
       white-space: pre;
       font-family: monospace;
+      font-size: 85%;
     }
     
     td.example h4
@@ -43,13 +62,40 @@
     next: 2017), and while information is freely provided as PDFs or Excel
     spreadsheets and hosted by the U.S. Census Bureau, no machine-readable API
     exists for retrieving this data that can be easily used in applications.
+  </p>
+  
+  <p>
     Until now.
+  </p>
+  
+  <p>
+    With the NAICS API, you can:
+  </p>
+  
+  <ul>
+    <li><a href="#one-code">Look up a single NAICS code.</a></li>
+    <li><a href="#searching">Search for a NAICS industry code.</a></li>
+    <li><a href="#all-data">Get all NAICS information for a year.</a></li>
+    <li><a href="#parents">Look up parent</a> and <a href="#descendants">descendant codes</a>.</li>
+  </ul>
+  
+  <p>
+    <a href="http://www.codeforamerica.org"><img src="http://codeforamerica.org/wp-content/uploads/2011/12/CfA_logo-300x120.png" width="150" height="60"></a>
+  </p>
+  
+  <p>
+    NAICS API is a product of Code for America’s
+    <a href="http://www.codeforamerica.org/2013-partners/las-vegas/">2013 Team Las Vegas</a>,
+    <a href="http://www.codeforamerica.org/2013-fellows/#Lou">Lou Huang</a>
+    and <a href="http://www.codeforamerica.org/2013-fellows/#Ryan%20Closner">Ryan Closner</a>,
+    with <a href="http://www.codeforamerica.org/who-we-are/">Michal Migurski</a>.
+    <a href="https://github.com/codeforamerica/naics-api">Source code on Github</a>.
   </p>
   
   <table>
     <tr>
       <td colspan="2">
-        <h2>One NAICS Code</h2>
+        <h2>One NAICS Code <a id="one-code" href="#one-code">¶</a></h2>
       </td>
     </tr>
     <tr>
@@ -71,7 +117,8 @@
           <dd>The NAICS code to retrieve.</dd>
         </dl>
         
-        <h3>Response Dictionary</h3>
+        <h3>Response Dictionary <a id="response-dict" href="#response-dict">¶</a></h3>
+        <dl>
           <dt>code</dt><dd>2-6 digit NAICS code.</dd>
           <dt>title</dt><dd>Name of the NAICS code.</dd>
           <dt>seq_no</dt><dd>Sequence number. Appears to be used as a primary key in databases by some agencies.</dd>
@@ -82,6 +129,7 @@
           <dt>examples</dt><dd>If present, an array of illustrative examples.</dd>
           <dt>crossrefs</dt><dd>If present, an array of cross-references to other NAICS codes that should be used to fine-tune a business classification. Both the text description of a cross-reference and its reference NAICS code is provided.</dd>
           <dt>index (2012 6-digit codes only)</dt><dd> If present, an array of other titles that belong under this NAICS code. Useful as a keyword search to determine where specific businesses should be classified.<br><em>NOTE: Index entries exist for 2007 but are not currently available in NAICS API.</em></dd>
+        </dl>
       </td>
       <td class="example">
 <h4>Definition</h4>
@@ -124,7 +172,7 @@ http://host:port/v0/q?year={year}&amp;code={code}
     </tr>
     <tr>
       <td colspan="2">
-        <h2>Searching for a NAICS code</h2>
+        <h2>Searching for a NAICS code <a id="searching" href="#searching">¶</a></h2>
       </td>
     </tr>
     <tr>
@@ -147,6 +195,12 @@ http://host:port/v0/q?year={year}&amp;code={code}
           <dt>terms</dt>
           <dd>Words to use when searching. Single words or pairs of words are best here, such as “software” or “software publishing”.</dd>
         </dl>
+        
+        <h3>Response</h3>
+        
+        <p>
+          List of matching <a href="#response-dict">NAICS codes</a>.
+        </p>
       </td>
       <td class="example">
 <h4>Definition</h4>
@@ -177,7 +231,8 @@ http://host:port/v0/s?year={year}&amp;terms={search terms}
   }, 
   {
     "code": 519130, 
-    "title": "Internet Publishing and Broadcasting and Web Search Portals", 
+    "title": "Internet Publishing and Broadcasting
+              and Web Search Portals", 
     ...
   }, 
   ...
@@ -186,7 +241,7 @@ http://host:port/v0/s?year={year}&amp;terms={search terms}
     </tr>
     <tr>
       <td colspan="2">
-        <h2>All NAICS information for a year</h2>
+        <h2>All NAICS information for a year <a id="all-data" href="#all-data">¶</a></h2>
       </td>
     </tr>
     <tr>
@@ -205,6 +260,12 @@ http://host:port/v0/s?year={year}&amp;terms={search terms}
           <dt>year</dt>
           <dd>The NAICS dataset year to request. Currently <samp>2007</samp> and <samp>2012</samp> are available.</dd>
         </dl>
+        
+        <h3>Response</h3>
+        
+        <p>
+          List of <a href="#response-dict">NAICS codes</a> for a year.
+        </p>
       </td>
       <td class="example">
 <h4>Definition</h4>
@@ -242,7 +303,7 @@ http://host:port/v0/q?year={year}
     </tr>
     <tr>
       <td colspan="2">
-        <h2>Parent Codes</h2>
+        <h2>Parent Codes <a id="parents" href="#parents">¶</a></h2>
       </td>
     </tr>
     <tr>
@@ -266,6 +327,12 @@ http://host:port/v0/q?year={year}
           <dt>above</dt>
           <dd><samp>1</samp> to include parent codes.</dd>
         </dl>
+        
+        <h3>Response</h3>
+        
+        <p>
+          List of parent <a href="#response-dict">NAICS codes</a>.
+        </p>
       </td>
       <td class="example">
 <h4>Definition</h4>
@@ -300,7 +367,7 @@ http://host:port/v0/q?year={year}&amp;code={code}&amp;above=1
     </tr>
     <tr>
       <td colspan="2">
-        <h2>Descendant Codes</h2>
+        <h2>Descendant Codes <a id="descendants" href="#descendants">¶</a></h2>
       </td>
     </tr>
     <tr>
@@ -324,6 +391,12 @@ http://host:port/v0/q?year={year}&amp;code={code}&amp;above=1
           <dt>below</dt>
           <dd><samp>1</samp> to include descendant codes.</dd>
         </dl>
+        
+        <h3>Response</h3>
+        
+        <p>
+          List of descendant <a href="#response-dict">NAICS codes</a>.
+        </p>
       </td>
       <td class="example">
 <h4>Definition</h4>
