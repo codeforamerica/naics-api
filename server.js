@@ -24,6 +24,6 @@ app.get('/v0/s', api.v0.search.get)
 app.get('api/v0/q', api.v0.query.get)
 app.get('api/v0/s', api.v0.search.get)
 
-app.listen(config.port, function () {
+app.listen(config.port, config.ip, function () {
   console.log( "Listening on port " + config.port )
 })
