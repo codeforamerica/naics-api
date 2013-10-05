@@ -31,7 +31,7 @@ exports.get = function ( req, res ) {
 			    }
 			    
 			    // Sort with highest-scored items first.
-			    items.sort(function(a, b) { return (results[b.code] - b.code.toString().length*2) - (results[a.code] - a.code.toString().length*2) });
+			    items.sort(function(a, b) { return (results[b.code] + b.code.toString().length*2) - (results[a.code] + a.code.toString().length*2) });
 			
 			    // Send JSON to client
 			    res.send(items);
