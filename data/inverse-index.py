@@ -29,6 +29,9 @@ stops = compile(r',\s+').split(stop_words)
 junk_ = compile(u'^[\s\;\:\,\.\!\?\(\)\"\'…“”‘’]+')
 _junk = compile( u'[\s\;\:\,\.\!\?\(\)\"\'…“”‘’]+$')
 
+# Adapted from http://stackoverflow.com/a/10297152/336353
+plurals = compile(r'(?<![aei])([ie][d])(?=[^a-zA-Z])|(?<=[ertkgwmnl])s$')
+
 def cleanup(word):
     ''' Clean up a single word if it's got some obvious junk on it.
     '''
@@ -56,7 +59,11 @@ def tokenize(text):
                      in zip(words, words[1:], words[2:])
                      if not (w1 in stops or w3 in stops)]
 
-    word_set = set(word_singles + word_pairs + word_triplets)
+    words_altogether = word_singles + word_pairs #+ word_triplets
+    words_singular = [plurals.sub('', s) for s in words_altogether]
+    
+    # Include original and singular variants of words
+    word_set = filter(None, set(words_singular + words_altogether))
     
     return word_set
 
