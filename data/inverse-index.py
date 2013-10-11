@@ -4,6 +4,8 @@ import json
 from sys import argv
 from re import compile
 from collections import defaultdict
+import inflect
+p = inflect.engine()
 
 stop_words = '''a, about, above, after, again, against, all, am, an, and, any,
 are, aren't, as, at, be, because, been, before, being, below, between, both,
@@ -30,7 +32,7 @@ junk_ = compile(u'^[\s\;\:\,\.\!\?\(\)\"\'…“”‘’]+')
 _junk = compile( u'[\s\;\:\,\.\!\?\(\)\"\'…“”‘’]+$')
 
 # Adapted from http://stackoverflow.com/a/10297152/336353
-plurals = compile(r'(?<![aei])([ie][d])(?=[^a-zA-Z])|(?<=[ertkgwmnl])s$')
+# plurals = compile(r'(?<![aei])([ie][d])(?=[^a-zA-Z])|(?<=[ertkgwmnl])s$')
 
 def cleanup(word):
     ''' Clean up a single word if it's got some obvious junk on it.
@@ -60,7 +62,7 @@ def tokenize(text):
                      if not (w1 in stops or w3 in stops)]
 
     words_altogether = word_singles + word_pairs #+ word_triplets
-    words_singular = [plurals.sub('', s) for s in words_altogether]
+    words_singular = [p.singular_noun(s) or s for s in words_altogether]
     
     # Include original and singular variants of words
     word_set = filter(None, set(words_singular + words_altogether))
