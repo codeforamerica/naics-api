@@ -46,9 +46,23 @@ def cleanup(word):
 def tokenize(text):
     ''' Tokenize a block of text into a set of search terms.
     '''
+
+    #
+    # Ignore "except" language
+    #
+    
+    try:
+      start = text.index('(except')
+      end = text.index(')', start) + 1
+      if end > start:
+        text = text.replace(text[start:end], '')
+    except:
+      pass
+
     #
     # Clean up words and group them into ones, twos and threes.
     #
+
     words = map(cleanup, breaks.split(text))
 
     word_singles = [word for word in words if word not in stops]
