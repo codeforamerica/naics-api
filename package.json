@@ -10,7 +10,9 @@
   "dependencies": {
     "config": "0.4.x",
     "requireindex" : "1.0.x",
-    "restify" : "2.5.x"
+    "restify" : "2.5.x",
+    "naics-2007": "0.0.4",
+    "naics-2012": "0.0.3"
   },
   "devDependencies": {
     "jasmine-node": "1.6.x",
