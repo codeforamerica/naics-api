@@ -1,74 +1,56 @@
-# NAICS-API
+[![Build Status](https://travis-ci.org/18F/codetalker.svg?branch=master)](https://travis-ci.org/18F/codetalker)
 
-[NAICS](http://www.census.gov/eos/www/naics/) (North American Industry Classification System) is maintained by the United States Bureau of Labor Statistics to classify business types. It is used for aggregating, presenting, and analyzing data and trends in the US economy.
-
-The classification system is currently hosted by the [Census Bureau](http://www.census.gov/eos/www/naics/) and provided in various Excel and PDF documents, with some rudimentary HTML output and a not-so-great search tool.  Our goal is to improve on the Census Bureau's offerings by providing an API to make information machine-readable, with better search functionality, to assist with developing applications that depend on understanding or collecting information about businesses. 
+# Code Talker
 
 ## The Product
+Code Talker is a set of API endpoints to enable discovery and understanding of various procurement codes. The API is intented to power sites and applications that utilize federal solicitations and support industry and government interactions.
 
-NAICS API is currently a Node.js server that returns NAICS data in a JSON format. Information stored on the server has been scraped or collected from files on the Census.gov web site. Most of the information for 2007 and 2012 has now been scraped thanks to the addition of a python scraper by Mike Migurski (see ``./data/scrape-examples-xrefs``).
+Code Talker 's NAICS endpoints return NAICS data in JSON format. Information stored on the server has been scraped or collected from files on the Census.gov web site. Most of the information for 2007 and 2012 has now been scraped thanks to the addition of a python scraper by Mike Migurski (see ``./data/scrape-examples-xrefs``).
 
-### API documentation
+## NAICS
+[NAICS](http://www.census.gov/eos/www/naics/) (North American Industry Classification System) is maintained by the United States Bureau of Labor Statistics to classify business types. The classification system is currently hosted by the [Census Bureau](http://www.census.gov/eos/www/naics/) and provided in various Excel and PDF documents.  Our goal is to improve on the Census Bureau's offerings by providing an API to make information machine-readable, with better search functionality, to assist with developing applications that depend on understanding or collecting information about businesses. 
 
-[Latest API documentation is hosted at Apiary.io.](http://docs.naicsapi.apiary.io/)
+## Installation as a local server
 
-### API example requests
+### Installation with Vagrant
 
-Example request
+Vagrant is a tool letting you easily set up a virtual machine with all requirements
+for `codetalker` pre-installed.
 
-    http://api.naics.us/v0/q?year=2012&code=519120
+First install the lastest Vagrant () and Virtualbox (4.3.12+). Then run the below in the console.
 
+```
+vagrant plugin install vagrant-vbguest
+vagrant up
+vagrant ssh
+``` 	
 
-To get NAICS codes above a given code
-
-    http://api.naics.us/v0/q?year=2012&code=519120&above=1
-
-
-To get NAICS codes below a given code
-
-    http://api.naics.us/v0/q?year=2012&code=51&below=1
-
-
-To get all NAICS codes for a given years codes (only 2007 and 2012 are available right now)
-
-    http://api.naics.us/v0/q?year=2012
+### (Alternately) Installation without Vagrant
 
 
-To get all NAICS codes for given search terms (searches only title and index right now)
+1) Download and install [Node.js](http://nodejs.org/) and [Ruby](rubylang.org).  
 
-    http://api.naics.us/v0/s?year=2012&terms=libraries
+2) 
 
+    sudo npm install -g grunt-cli bower
+    sudo gem install compass
 
-__Warning!__ The URL (server and/or structure) is likely to change in the very near future. Do not use for production (yet).
+## Setup
 
+After installation of the software, 
 
-### Usage
+1) Clone this repository to a folder on your computer. The rest of this document will refer to this folder as `$PROJECT_ROOT`.
 
-* A simple example demo search interface for NAICS codes [site](http://louh.github.io/naics-search) and [repository](https://github.com/louh/naics-search)
+    export PROJECT_ROOT=`pwd`/codetalker
+    git clone https://github.com/18F/codetalker.git $PROJECT_ROOT
 
-* Work in progress real-world application [site](http://lv-dof-staging.herokuapp.com/) and [repository](https://github.com/rclosner/lv-dof)
-
-
-### Additional information
-
-* An early NAICS scraper at [daguar/naics-scraper](https://github.com/daguar/naics-scraper/))
-* Further discussion at [dobtco/NAICS](https://github.com/dobtco/NAICS/issues/1)
-* Ongoing progress report at [codeforamerica/hack-requests](https://github.com/codeforamerica/hack-requests/blob/master/naics-api.md)
-
-
-## Development setup (on Mac OS X 10.8)
-
-### First-time setup
-
-1) Download and install [Node.js](http://nodejs.org/).
-
-2) Clone this repository to a folder on your computer. The rest of this document will refer to this folder as `$PROJECT_ROOT`.
-
-3) Install project dependencies.
+2) Install project-specific dependencies.
 
     cd $PROJECT_ROOT
+    nodenv rehash
+    bower install
     npm install
-
+    
 ### Every time you sync $PROJECT_ROOT with the remote GitHub repo
 
 1) Update the project dependencies.
@@ -83,13 +65,55 @@ __Warning!__ The URL (server and/or structure) is likely to change in the very n
     cd $PROJECT_ROOT
     npm start
 
+## API documentation
+
+[Latest API documentation is hosted at Apiary.io.](http://docs.codetalker.apiary.io/)
+
+### API example requests
+
+(To run these examples against your local development server, replace 
+`http://api.data.gov/gsa/naics/` with `http://localhost:9000/api/`)
+ 
+Example request
+
+    http://api.data.gov/gsa/naics/q?year=2012&code=519120
+
+
+To get NAICS codes above a given code
+
+    http://api.data.gov/gsa/naics/q?year=2012&code=519120&above=1
+
+
+To get NAICS codes below a given code
+
+    http://api.data.gov/gsa/naics/q?year=2012&code=51&below=1
+
+
+To get all NAICS codes for a given years codes (only 2007 and 2012 are available right now)
+
+    http://api.data.gov/gsa/naics/?year=2012
+
+To get only a partial set of fields in the response
+
+    http://api.data.gov/gsa/naics/?year=2012&field=code&field=title
+
+To get all NAICS codes for given search terms (searches only title and index right now)
+
+    http://api.naics.us/v0/s?year=2012&terms=libraries
+
+
+### Usage
+
+* A simple example demo search interface for NAICS codes [site](http://louh.github.io/naics-search) and [repository](https://github.com/louh/naics-search)
+
+* Work in progress real-world application [site](http://lv-dof-staging.herokuapp.com/) and [repository](https://github.com/rclosner/lv-dof)
+
 ## Contributing
 
 ### Help Needed
 
 There are other data that can be included in the API. Not all of these are within the scope of the scraper however.
 
-* Illustrative examples from 2007 NAICS
 * Information from NAICS prior to 2007 (2002, 1997 - low priority)
 * Data for converting between different NAICS codes and other systems, like SIC or NIGP
 
@@ -102,7 +126,7 @@ On the API side:
 We use the [GitHub issue tracker][issues] to track bugs and features. Before submitting a bug report or feature request, check to make sure it hasn't already been submitted. When submitting a bug report, please include a [Gist][] that includes a stack trace and any details that may be necessary to reproduce the bug, including your gem version, Ruby version, and operating system. Ideally, a bug report should include a pull request with failing specs.
 
 [gist]: https://gist.github.com/
-[issues]: https://github.com/codeforamerica/naics-api/issues?&state=open
+[issues]: https://github.com/18F/afsmallbiz/issues?state=open
 
 ### Submitting a Pull Request
 1. [Fork the repository.][fork]
@@ -115,6 +139,3 @@ We use the [GitHub issue tracker][issues] to track bugs and features. Before sub
 [fork]: http://help.github.com/fork-a-repo/
 [branch]: http://learn.github.com/p/branching.html
 [pr]: http://help.github.com/send-pull-requests/
-
-
-[![Code for America Tracker](http://stats.codeforamerica.org/codeforamerica/cfa_template.png)](http://stats.codeforamerica.org/projects/naics-api)

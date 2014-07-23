@@ -1,29 +1,89 @@
 {
-  "name": "naics-api",
-  "description": "NAICS API",
+  "name": "Codetalker",
+  "description": "A collection of procurement APIs and services",
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "0.10.x",
-    "npm":  "1.2.x"
+    "node": ">=0.10.0",
+    "npm": "1.2.x"
   },
   "dependencies": {
+    "body-parser": "^1.0.2",
+    "compression": "^1.0.7",
     "config": "0.4.x",
-    "requireindex" : "1.0.x",
-    "restify" : "2.5.x",
+    "cookie-parser": "^1.0.1",
+    "ejs": "^0.8.8",
+    "errorhandler": "~1.0.0",
+    "express": "^4.0.0",
+    "express-session": "^1.0.4",
+    "lodash": "~2.4.1",
+    "method-override": "^1.0.2",
+    "morgan": "^1.0.1",
     "naics-2007": "0.0.4",
-    "naics-2012": "0.0.3"
+    "naics-2012": "0.0.3",
+    "requireindex": "^1.0.1",
+    "restify": "^2.5.1",
+    "static-favicon": "^1.0.2"
   },
   "devDependencies": {
-    "jasmine-node": "1.6.x",
-    "request": "2.24.x"
+    "jasmine-node": "*",
+    "request": "2.24.x",
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "~0.4.0",
+    "grunt-bower-install": "~0.7.0",
+    "grunt-concurrent": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-htmlmin": "~0.1.3",
+    "grunt-contrib-imagemin": "~0.5.0",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-google-cdn": "~0.2.0",
+    "grunt-newer": "~0.5.4",
+    "grunt-ngmin": "~0.0.2",
+    "grunt-rev": "~0.1.0",
+    "grunt-svgmin": "~0.2.0",
+    "grunt-usemin": "~2.0.0",
+    "jshint-stylish": "~0.1.3",
+    "load-grunt-tasks": "~0.2.0",
+    "time-grunt": "~0.2.1",
+    "grunt-express-server": "~0.4.5",
+    "grunt-open": "~0.2.0",
+    "connect-livereload": "~0.3.0",
+    "karma-ng-scenario": "~0.1.0",
+    "grunt-karma": "~0.6.2",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-script-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-jasmine": "~0.1.5",
+    "karma-chrome-launcher": "~0.1.2",
+    "requirejs": "~2.1.10",
+    "karma-requirejs": "~0.2.1",
+    "karma-coffee-preprocessor": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.1.1",
+    "karma": "~0.10.9",
+    "karma-ng-html2js-preprocessor": "~0.1.0",
+    "grunt-mocha-test": "~0.8.1",
+    "supertest": "*",
+    "should": "*",
+    "grunt-env": "~0.4.1",
+    "grunt-node-inspector": "~0.1.3",
+    "grunt-nodemon": "~0.2.0",
+    "open": "~0.0.4"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/louh/naics-api.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/18F/codetalker.git"
   },
   "scripts": {
-    "start": "node server.js"
+    "install": "grunt build",
+    "start": "grunt serve",
+    "test": "grunt test",
+    "dist": "grunt serve:dist"
   },
   "main": "server.js"
 }

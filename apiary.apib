@@ -1,6 +1,6 @@
-HOST: http://api.naics.us/v0/
+HOST: http://api.data.gov/gsa/codetalker/v0/
 
---- NAICS API ---
+--- Code Talker ---
 
 ---
 The [North American Industry Classification System](http://www.census.gov/eos/www/naics/) (NAICS) is used by the U.S. Federal Government to organize 
@@ -45,6 +45,22 @@ GET /q{?year}
             "code": 11,
             "title": "Agriculture, Forestry, Fishing and Hunting",
             "trilateral": 1
+        },
+        {  ...  }
+    ]
+}
+
+Limit fields returned to field(s) specified.
+GET /q{?year,field}
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{
+    "name": "2012 NAICS Codes",
+    "year": 2012,
+    "items": [
+        {
+            "title": "Agriculture, Forestry, Fishing and Hunting"
         },
         {  ...  }
     ]
