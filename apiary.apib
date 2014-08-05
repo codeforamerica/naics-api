@@ -1,6 +1,6 @@
-HOST: http://api.naics.us/v0/
+HOST: http://api.data.gov/gsa/codetalker/v0/
 
---- NAICS API ---
+--- Code Talker ---
 
 ---
 The [North American Industry Classification System](http://www.census.gov/eos/www/naics/) (NAICS) is used by the U.S. Federal Government to organize 
@@ -31,8 +31,27 @@ How to get codes, and information related to that code
 
 --
 
-Get all NAICS codes for a given year (only 2007 and 2012 are available right now.)
-GET /q{?year}
+Get all NAICS codes for a given YYYYMMDD date (only 2007 and 2012 are available right now.)
+GET /q{?date}
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{
+    "name": "2007 NAICS Codes",
+    "year": 2007,
+    "items": [
+        {
+            "seq_no": 1,
+            "code": 11,
+            "title": "Agriculture, Forestry, Fishing and Hunting",
+            "trilateral": 1
+        },
+        {  ...  }
+    ]
+}
+
+Get all NAICS codes for the most recent NAICS year if no date is given
+GET /q
 > Accept: application/json
 < 200
 < Content-Type: application/json
@@ -50,8 +69,24 @@ GET /q{?year}
     ]
 }
 
+Limit fields returned to field(s) specified.
+GET /q{?date,field}
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{
+    "name": "2012 NAICS Codes",
+    "year": 2012,
+    "items": [
+        {
+            "title": "Agriculture, Forestry, Fishing and Hunting"
+        },
+        {  ...  }
+    ]
+}
+
 Get a single NAICS code.
-GET /q{?year,code}
+GET /q{?date,code}
 > Accept: application/json
 < 200
 < Content-Type: application/json
@@ -86,7 +121,7 @@ GET /q{?year,code}
 }
 
 Get all NAICS codes above in the hierarchy of the requested code.
-GET /q{?year,code,above}
+GET /q{?date,code,above}
 > Accept: application/json
 < 200
 < Content-Type: application/json
@@ -118,7 +153,7 @@ GET /q{?year,code,above}
 ]
 
 Get all NAICS codes below in the hierarchy of the requested code.
-GET /q{?year,code,below}
+GET /q{?date,code,below}
 > Accept: application/json
 < 200
 < Content-Type: application/json
@@ -171,7 +206,7 @@ Returns an array of all the NAICS codes that contain search terms in the title o
 Currently, this does not search description, illustrative examples, or cross references because we don't have this information yet.
 
 Example shows search term for "libraries"
-GET /s{?year,terms}
+GET /s{?date,terms}
 > Accept: application/json
 < 200
 < Content-Type: application/json

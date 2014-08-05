@@ -1,0 +1,7 @@
+flask-sqlalchemy
+flask-script
+flask-restful
+psycopg2
+sqlalchemy_jsonapi
+nose
+dateutils

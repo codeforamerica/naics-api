@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.3"
+service: postgresql
+install: "pip install -r requirements.txt"
+script: nosetests
+before_install:
+- psql -c 'create database codetalker;' -U postgres
+- psql -f data/test_data_slice.sql -U postgres codetalker
+deploy:
+  provider: opsworks
+  access_key_id: AKIAJUWHVUZI4E4P7I4Q
+  secret_access_key:
+    secure: Tj+vfz6TiC+r4n1UkesiJXBn/n20NPZsUY84drS3iToT8zfQYcnpN8aBsHZ8JtZ4BAUWfvtz7OQFJHfPV49wvCNJ+GFHwJorVGqFG5wJthrjDZzOs1tNzO+Rd+VNczscIMNQeD0k1x6UKg6BjOndIO9gBqWKsW3kCbjsXtECr8o=
+  app-id: e87e7fc2-d0cc-4f83-b1b4-369ed87c0f79 
+  on:
+    repo: 18F/codetalker
