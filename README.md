@@ -67,21 +67,24 @@ __Warning!__ The URL (server and/or structure) is likely to change in the very n
 3) Install project dependencies.
 
     cd $PROJECT_ROOT
-    npm install
+    yarn install
 
 ### Every time you sync $PROJECT_ROOT with the remote GitHub repo
 
 1) Update the project dependencies.
 
     cd $PROJECT_ROOT
-    npm install
+    yarn upgrade-interactive
+
+_Note: if this doesn't work you may need to run the following_:
+`yarn plugin import interactive-tools`
 
 ### To start the REST API server
 
 1) Start the REST API server.
 
     cd $PROJECT_ROOT
-    npm start
+    yarn start
 
 ## Contributing
 
